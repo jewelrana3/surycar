@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* background: #0c0b0e !important; */
+    /* color: gray !important; */
+}
+
+.ant-layout-header {
+    background-color: white !important;
+}
+
+.ant-menu-item {
+    font-size: 16px !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 
+.border-bottom {
+    border: 0.6px solid black;
+}
+.ant-layout-header {
+    background-color: #0c0b0e !important;
+}
+
+.ant-menu-item:hover {
+    background: #cfc1ab !important;
+    color: black !important;
+    gap: '3px';
+
+}
+
+
+.ant-menu-item-selected {
+    background: #cfc1ab !important;
+    color: black !important;
+    gap: '3px';
+}
+
+.ant-menu .ant-menu-item .ant-menu-item-icon + span {
+    transition: none !important;
+}
+
+.ant-menu .ant-menu-title-content {
+    transition: none !important;
+}
+
+.ant-layout-header {
+    background: #181c1d !important;
+    color: #ffbc58 !important;
+}
+
+.ant-form {
+    color: #dbdbdb !important;
+}
+
+.ant-form-item .ant-form-item-label > label {
+    color: #ffbc58 !important;
+}
+
+.ant-pagination-item-active a {
+    color: white !important;
+   
+}
+.ant-pagination-item:hover a {
+    border-radius: 5px !important;
+  
+}
+
+.ant-table-cell {
+    margin-left: 30px;
+}
+
+.ant-menu-sub {
+    background-color: rgb(0, 0, 0) !important;
+}
+
+
+
+.jodit-wysiwyg ul {
+    list-style-type: disc;
+    padding-left: 40px;
+}
+.jodit-wysiwyg ol {
+    list-style-type: decimal;
+    padding-left: 40px;
+}
+
+.ant-menu-submenu-title {
+    color: white !important;
+}
+
+.ant-pagination-item-active a {
+    color: #c4a862 !important;
+}
+
+.ant-pagination .ant-pagination-disabled .ant-pagination-item-link,
+.ant-pagination .ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: white !important;
+    cursor: not-allowed;
+}
+
+
+
+.custom-input:hover,
+.custom-input:focus {
+    background-color: #808080 !important;
+    cursor: pointer;
+} */
