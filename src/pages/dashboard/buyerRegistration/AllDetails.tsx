@@ -1,0 +1,63 @@
+import BuyerDetails from './BuyerDetails';
+import ProductDetails from './PrudcutDetails';
+import SellerDetails from './SellerDetails';
+
+const registrationDetails = [
+    { label: 'Contact No', value: '+963 932 509 736' },
+    { label: 'Email', value: 'asadujjaman101@gmail.com' },
+    { label: 'Address', value: 'P. O. Box 50332, Damasc...' },
+    {
+        label: 'Message',
+        value: (
+            <>
+                Dear Sir or Madam,
+                <br />
+                I am interested in your offer. Please contact me.
+                <br />
+                Sincerely,
+                <br />
+                Md. Asadujjaman
+            </>
+        ),
+    },
+    { label: 'Register Date', value: '2/11/12' },
+];
+
+export default function AllDetails() {
+    return (
+        <div>
+            <div className="grid grid-cols-2 gap-10">
+                <BuyerDetails />
+                <SellerDetails />
+            </div>
+            <div className="mt-4 grid grid-cols-8 gap-7">
+                {/* Registration Details Section */}
+                <div className="bg-white p-6 rounded-lg shadow-2xl col-span-3">
+                    <h2 className="text-xl font-medium text-[#3A99D9] mb-6">Registration Details</h2>
+
+                    <div className="space-y-3">
+                        {registrationDetails.map((item, index) => (
+                            <div key={index} className="grid grid-cols-2">
+                                <p className="text-gray-500">{item.label}</p>
+                                <p
+                                    className={
+                                        item.label === 'Message' || item.label === 'Register Date'
+                                            ? 'text-gray-800'
+                                            : 'text-[#188A50]'
+                                    }
+                                >
+                                    {item.value}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Product Details Section */}
+                <div className="col-span-5">
+                    <ProductDetails />
+                </div>
+            </div>
+        </div>
+    );
+}

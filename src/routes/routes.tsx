@@ -11,11 +11,15 @@ import PrivacyPolicy from '../pages/dashboard/PrivacyPolicy';
 import EditProfile from '../pages/dashboard/profile/EditProfile';
 import ChangePassword from '../pages/dashboard/profile/ChangePassword';
 import Profile from '../pages/dashboard/profile/Profile';
-import Earning from '../pages/dashboard/earing/Earning';
 import TermsCondition from '../pages/dashboard/TermsCondition';
-import Category from '../pages/dashboard/category/Category';
-import Subscription from '../pages/dashboard/subscripton/Subscription';
 import Customers from '../pages/dashboard/customers/Customers';
+import CustomerDetails from '../pages/dashboard/customers/CustomerDetails';
+import PostList from '../pages/dashboard/postList/PostList';
+import PostDetails from '../pages/dashboard/postList/PostDetails';
+import BuyerRegistration from '../pages/dashboard/buyerRegistration/BuyerRegistration';
+import AllDetails from '../pages/dashboard/buyerRegistration/AllDetails';
+import AllDetailsSeller from '../pages/dashboard/sellerTransection/AllDetails';
+import SellerTransection from '../pages/dashboard/sellerTransection/SellerTransection';
 
 const router = createBrowserRouter([
     {
@@ -25,9 +29,14 @@ const router = createBrowserRouter([
         children: [
             { path: '', element: <Dashboard /> },
             { path: 'customers', element: <Customers /> },
-            { path: 'earning', element: <Earning /> },
-            { path: 'category', element: <Category /> },
-            { path: 'subscription', element: <Subscription /> },
+            { path: 'customer-details', element: <CustomerDetails /> },
+            { path: 'post-list', element: <PostList /> },
+            { path: 'post-details', element: <PostDetails /> },
+            { path: 'buyer-registration', element: <BuyerRegistration /> },
+            { path: 'all-details', element: <AllDetails /> },
+            { path: 'seller-transection', element: <SellerTransection /> },
+            { path: 'transection-details', element: <AllDetailsSeller /> },
+
             { path: 'privacy-policy', element: <PrivacyPolicy /> },
             { path: 'terms-condition', element: <TermsCondition /> },
             { path: 'notification', element: <Notification /> },

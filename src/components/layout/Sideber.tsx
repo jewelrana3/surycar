@@ -7,8 +7,12 @@ const menuItems = [
     { label: 'Analytics', path: '/', icon: <img src="/analytics.svg" alt="analytics" /> },
     { label: 'Customers', path: '/customers', icon: <img src="/customer.svg" alt="customer" /> },
     { label: 'Post List', path: '/post-list', icon: <CiFileOn size={22} /> },
-    { label: 'Buyer Registrations', path: '/byer', icon: <img src="/buy.svg" alt="buy" /> },
-    { label: 'Sellers Transection', path: '/sellers', icon: <img src="/transection.svg" alt="Transections" /> },
+    { label: 'Buyer Registrations', path: '/buyer-registration', icon: <img src="/buy.svg" alt="buy" /> },
+    {
+        label: 'Sellers Transection',
+        path: '/seller-transection',
+        icon: <img src="/transection.svg" alt="Transections" />,
+    },
     {
         label: 'Package Setting ',
         path: '/package',

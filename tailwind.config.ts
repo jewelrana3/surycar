@@ -4,9 +4,10 @@ export default {
     theme: {
         extend: {
             colors: {
-                textGray: '#DBDBDB',
+                textGray: '#A1A1A1',
                 textCategory: '#ABABAB',
                 textGolden: '#DBCC93',
+                textBuyer: '#3A99D9',
             },
             backgroundColor: {
                 bgWhite: '#FEFEFE',

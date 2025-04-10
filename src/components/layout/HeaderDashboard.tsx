@@ -1,11 +1,27 @@
 import { Layout } from 'antd';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PageTitle from '../shared/PageTitle';
+import { HiArrowSmallLeft } from 'react-icons/hi2';
 
 const { Header } = Layout;
 
+const path = [
+    { path: '/', name: 'Analytics' },
+    { path: '/customers', name: 'Customers' },
+    { path: '/post-list', name: 'Post List' },
+    { path: '/customer-details', name: 'Customer Profile' },
+    { path: '/post-details', name: 'Post Details' },
+    { path: '/buyer-registration', name: 'Buyer Registration' },
+    { path: '/all-details', name: 'All Details' },
+    { path: '/seller-transection', name: 'Sellers Transection' },
+];
+
 const HeaderDashboard = () => {
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const currentPage = path.find((item) => item.path === currentPath);
     return (
         <Header
             className="px-8 my-2"
@@ -16,7 +32,19 @@ const HeaderDashboard = () => {
         >
             <div className="flex items-center justify-between">
                 <div>
-                    <PageTitle>Analytics</PageTitle>
+                    {currentPage ? (
+                        currentPage.path === '/customer-details' ||
+                        currentPage.path === '/post-details' ||
+                        currentPage.path === '/all-details' ? (
+                            <div className="flex items-center gap-2">
+                                <HiArrowSmallLeft className="" size={25} /> <PageTitle>{currentPage.name}</PageTitle>
+                            </div>
+                        ) : (
+                            <PageTitle>{currentPage.name}</PageTitle>
+                        )
+                    ) : (
+                        ''
+                    )}
                 </div>
                 <div className="flex items-center justify-end gap-5 h-full">
                     <div>

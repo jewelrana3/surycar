@@ -21,6 +21,9 @@ function App() {
                             colorText: '#767676',
                             headerSplitColor: '#929292',
                             borderColor: '#FFFFFF',
+                            padding: 6,
+
+                            fontFamily: 'Poppins',
                         },
                         Select: {
                             colorBgContainer: '#F4F4F4',
