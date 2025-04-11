@@ -16,6 +16,9 @@ const path = [
     { path: '/all-details', name: 'All Details' },
     { path: '/seller-transection', name: 'Sellers Transection' },
     { path: '/transection-details', name: 'Transection Details' },
+    { path: '/work-functionality', name: 'Work Functionality' },
+    { path: '/terms-condition', name: 'Terms Condition' },
+    { path: '/privacy-policy', name: 'Privacy Policy' },
 ];
 
 const HeaderDashboard = () => {

@@ -1,5 +1,5 @@
 import { Menu } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../public/logo.svg';
 import { CiFileOn, CiLogout } from 'react-icons/ci';
 
@@ -33,7 +33,7 @@ const settings = [
                 path: '/work-functionality',
                 icon: <img src="/work.svg" alt="work" />,
             },
-            { label: 'About Us', path: '/about', icon: <img src="/about.svg" alt="about" /> },
+            { label: 'About Us', path: '/about-us', icon: <img src="/about.svg" alt="about" /> },
 
             {
                 label: 'Privacy & Policy',
@@ -51,6 +51,7 @@ const settings = [
 
 const Sidebar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         navigate('/login');
@@ -62,13 +63,19 @@ const Sidebar = () => {
             </div>
 
             <Menu mode="inline" style={{ backgroundColor: 'white', color: 'black' }} className="mt-10">
-                {menuItems.map((item) => (
-                    <Menu.Item key={item.path} icon={item.icon} className="">
-                        <Link className="" to={item.path}>
-                            {item.label}
-                        </Link>
-                    </Menu.Item>
-                ))}
+                {menuItems.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                        <Menu.Item
+                            key={item.path}
+                            icon={<span className={isActive ? `text-white` : 'text-gray-500'}>{item.icon}</span>}
+                        >
+                            <Link className="" to={item.path}>
+                                {item.label}
+                            </Link>
+                        </Menu.Item>
+                    );
+                })}
 
                 {settings.map((setting) => (
                     <Menu.SubMenu key={setting.path} icon={setting.icon} title={setting.label}>
@@ -81,6 +88,14 @@ const Sidebar = () => {
                         ))}
                     </Menu.SubMenu>
                 ))}
+                <Link to="/manage-admin">
+                    <div className="text-black flex  items-center gap-3 mt-3 text-[18px]  py-2 rounded-xl cursor-pointer ml-6">
+                        <span>
+                            <CiLogout className="font-bold" size={23} />
+                        </span>
+                        <span>Manage Admin</span>
+                    </div>
+                </Link>
                 <div
                     className="text-black flex justify-center items-center gap-3 mt-10 text-[18px]  py-2 rounded-xl cursor-pointer"
                     onClick={handleLogout}

@@ -2,7 +2,6 @@ import { ConfigProvider, Form, Input } from 'antd';
 import { useNavigate } from 'react-router';
 import forgots from '../../../public/auth/forgot.svg';
 import Button from '../../components/shared/Button';
-// import Swal from 'sweetalert2';
 
 const ForgetPassword = () => {
     const navigate = useNavigate();
@@ -14,10 +13,6 @@ const ForgetPassword = () => {
     return (
         <ConfigProvider
             theme={{
-                token: {
-                    // colorPrimary: '#FBB040',
-                    // colorBgContainer: '#F1F4F9',
-                },
                 components: {
                     Input: {
                         borderRadius: 10,
@@ -37,17 +32,14 @@ const ForgetPassword = () => {
                 className="
             flex items-center justify-center h-screen"
             >
-                <div className=" px-5">
-                    <img src={forgots} width={460} height={460} alt="forgot" />
-                </div>
-                <span className="border-r-2 border-white h-[600px]"></span>
                 <div className="flex items-center justify-center px-6">
                     <div className="w-[500px]">
-                        <div className=" space-y-3 text-textGray">
-                            <h1 className="text-3xl  font-semibold mt-2">Forget Password</h1>
-                            <p className="">
-                                Enter your email address to ger a verification code for resetting your password.
-                            </p>
+                        <div className="flex items-center justify-center">
+                            <img src="/logo.svg" alt="logo" className="w-24" />
+                        </div>
+                        <div className=" space-y-3 text-center my-7">
+                            <h1 className="text-3xl  font-medium mt-2">Forget Password</h1>
+                            <p className="">Please enter your email for verification</p>
                         </div>
 
                         <Form
@@ -57,21 +49,25 @@ const ForgetPassword = () => {
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
                         >
-                            <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
-                                <Input
-                                    placeholder="Enter your email address"
-                                    type="email"
-                                    className="h-12 mt-5 bg-white"
-                                />
+                            <Form.Item
+                                name="email"
+                                label="Email"
+                                rules={[{ required: true, message: 'Please input your email!' }]}
+                            >
+                                <Input placeholder="Enter your email address" type="email" className="h-12 bg-white" />
                             </Form.Item>
 
                             <Form.Item>
-                                <Button htmlType="submit" className="w-full bg-authBg text-[#000000]">
-                                    Get OTP
+                                <Button htmlType="submit" className="w-full bg-authBg text-[#000000] rounded-md">
+                                    Send OTP
                                 </Button>
                             </Form.Item>
                         </Form>
                     </div>
+                </div>
+
+                <div className=" px-5">
+                    <img src={forgots} width={460} height={460} alt="forgot" />
                 </div>
             </div>
         </ConfigProvider>

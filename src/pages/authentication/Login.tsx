@@ -26,7 +26,7 @@ const Login = () => {
                         borderRadius: 10,
                         colorBorder: '#757575',
                         colorPrimaryBorder: 'transparent',
-                        hoverBorderColor: 'transparent',
+                        // hoverBorderColor: 'transparent',
                         // controlOutline: 'none',
                         activeBorderColor: '#757575',
                     },
@@ -37,9 +37,13 @@ const Login = () => {
             }}
         >
             <div className="flex items-center justify-center h-screen ">
-                <div className=" w-[650px] rounded-lg  border border-textYellow p-14 ">
-                    <div className="space-y-3 text-center text-textGray mb-10">
-                        <h1 className="text-3xl  font-semibold text-center mt-2">Login to Account</h1>
+                <img src="/auth/login.svg" alt="login" className="h-[80%]" />
+                <div className=" w-[650px] rounded-lg   p-14 ">
+                    <div className="flex items-center justify-center">
+                        <img src="/logo.svg" alt="logo" className="w-24" />
+                    </div>
+                    <div className="space-y-3 text-center my-10">
+                        <h1 className="text-2xl  font-semibold text-center mt-2">Login to Your Account</h1>
                         <p className="text-lg text-[#757575]">Please enter your email and password to continue</p>
                     </div>
 
@@ -90,7 +94,7 @@ const Login = () => {
 
                         <Form.Item>
                             <Button
-                                className="w-full bg-authBg"
+                                className="w-full rounded-xl bg-authBg"
                                 htmlType="submit"
 
                                 // onClick={() => navigate('/')}

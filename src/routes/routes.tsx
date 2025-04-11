@@ -22,6 +22,9 @@ import AllDetailsSeller from '../pages/dashboard/sellerTransection/AllDetails';
 import SellerTransection from '../pages/dashboard/sellerTransection/SellerTransection';
 import PackageSetting from '../pages/dashboard/pacekageSetting/PackageSetting';
 import Slider1 from '../pages/dashboard/slider1/Slider1';
+import WorkFunction from '../pages/dashboard/WorkFunction';
+import AboutUS from '../pages/dashboard/AboutUs';
+import ManageAdmin from '../pages/dashboard/admin/ManageAdmin';
 
 const router = createBrowserRouter([
     {
@@ -40,7 +43,10 @@ const router = createBrowserRouter([
             { path: 'transection-details', element: <AllDetailsSeller /> },
             { path: 'package', element: <PackageSetting /> },
             { path: 'slider1', element: <Slider1 /> },
+            { path: 'manage-admin', element: <ManageAdmin /> },
 
+            { path: 'work-functionality', element: <WorkFunction /> },
+            { path: 'about-us', element: <AboutUS /> },
             { path: 'privacy-policy', element: <PrivacyPolicy /> },
             { path: 'terms-condition', element: <TermsCondition /> },
             { path: 'notification', element: <Notification /> },

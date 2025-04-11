@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
         console.log(value);
     };
     return (
-        <div>
+        <div className="bg-white">
             <div
                 className="flex items-center gap-4 font-semibold text-[20px] text-textGray my-5"
                 onClick={() => navigate(-1)}
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
                     />
                 </div>
                 <Button onClick={() => handleOnSave(content)} className="mt-5 w-[10%]">
-                    Save
+                    Save & Change
                 </Button>
             </div>
         </div>

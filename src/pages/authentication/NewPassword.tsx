@@ -17,7 +17,7 @@ const NewPassword = () => {
             theme={{
                 token: {
                     colorPrimary: '#FBB040',
-                    colorBgContainer: '#F1F4F9',
+                    colorBgContainer: '#FFFFFF',
                 },
                 components: {
                     Input: {
@@ -37,16 +37,16 @@ const NewPassword = () => {
         >
             <div
                 className="
-            flex items-center justify-center h-screen"
+            flex items-center justify-center h-screen bg-[#F9F9F9]"
             >
-                <div className="px-5">
-                    <img src={newPass} width={460} height={460} alt="forgot" />
-                </div>
-                <span className="border-r-2 border-white h-[600px]"></span>
-                <div className="flex  items-center justify-center pl-7">
+                <div className="flex  items-center justify-center pl-7 ">
                     <div className=" w-[550px] ">
-                        <div className=" space-y-3 text-textGray">
-                            <h1 className="text-3xl font-semibold  mb-5">Set new password</h1>
+                        <div className="flex items-center justify-center">
+                            <img src="/logo.svg" alt="logo" className="w-24" />
+                        </div>
+                        <div className=" space-y-3 text-center my-7">
+                            <h1 className="text-3xl  font-medium mt-2">Reset Password</h1>
+                            <p className="text-[#929292]">Please enter your email and password to continue</p>
                         </div>
 
                         <Form
@@ -82,11 +82,14 @@ const NewPassword = () => {
                             <Form.Item>
                                 <Button className="bg-bgYellow w-full rounded-md text-[#181818] mt-5" htmlType="submit">
                                     {/* {isLoading ? 'Updating' : 'Update Password'} */}
-                                    Update Password
+                                    Confirm
                                 </Button>
                             </Form.Item>
                         </Form>
                     </div>
+                </div>
+                <div className="px-5">
+                    <img src={newPass} width={460} height={460} alt="forgot" />
                 </div>
             </div>
         </ConfigProvider>

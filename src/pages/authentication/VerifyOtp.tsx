@@ -42,11 +42,15 @@ const VerifyOtp = () => {
                 </div>
                 <span className="border-r-2 border-white h-[600px]"></span>
                 <div className="flex  items-center justify-center pl-8">
-                    <div className=" w-[500px] ">
-                        <div className=" space-y-3 ">
-                            <h1 className="text-3xl  font-semibold  mt-2">Verify OTP</h1>
+                    <div className=" w-[500px]">
+                        <div className="flex items-center justify-center ">
+                            <img src="/logo.svg" alt="logo" className="w-24" />
+                        </div>
+                        <div className=" space-y-3 text-center my-10">
+                            <h1 className="text-3xl  font-medium  mt-2">Verify OTP</h1>
                             <p className="text-[#757575]">
-                                Please check your email. We have sent a code to contact @gmail.com
+                                We sent a reset link to contact@dscode...com <br /> enter 5 digit code that is mentioned
+                                in the email
                             </p>
                         </div>
 
@@ -71,8 +75,17 @@ const VerifyOtp = () => {
                                     length={6}
                                 />
                             </Form.Item>
+
+                            <Form.Item>
+                                <Button className="bg-bgYellow w-full rounded-md text-[#181818]" htmlType="submit">
+                                    Verify
+                                </Button>
+                            </Form.Item>
+
                             <div className="text-lg flex items-center justify-between gap-2 mb-8">
-                                <p className="">Didn't receive the code?</p>
+                                <p style={{ fontFamily: 'Poppins' }} className="">
+                                    Didn't receive the code?
+                                </p>
                                 <p
                                     className="text-[#79CAA1] font-semibold underline cursor-pointer"
                                     // onClick={handleResendCode}
@@ -80,12 +93,6 @@ const VerifyOtp = () => {
                                     Resend
                                 </p>
                             </div>
-
-                            <Form.Item>
-                                <Button className="bg-bgYellow w-full rounded-md text-[#181818]" htmlType="submit">
-                                    Verify
-                                </Button>
-                            </Form.Item>
                         </Form>
                     </div>
                 </div>
