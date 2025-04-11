@@ -20,6 +20,8 @@ import BuyerRegistration from '../pages/dashboard/buyerRegistration/BuyerRegistr
 import AllDetails from '../pages/dashboard/buyerRegistration/AllDetails';
 import AllDetailsSeller from '../pages/dashboard/sellerTransection/AllDetails';
 import SellerTransection from '../pages/dashboard/sellerTransection/SellerTransection';
+import PackageSetting from '../pages/dashboard/pacekageSetting/PackageSetting';
+import Slider1 from '../pages/dashboard/slider1/Slider1';
 
 const router = createBrowserRouter([
     {
@@ -36,6 +38,8 @@ const router = createBrowserRouter([
             { path: 'all-details', element: <AllDetails /> },
             { path: 'seller-transection', element: <SellerTransection /> },
             { path: 'transection-details', element: <AllDetailsSeller /> },
+            { path: 'package', element: <PackageSetting /> },
+            { path: 'slider1', element: <Slider1 /> },
 
             { path: 'privacy-policy', element: <PrivacyPolicy /> },
             { path: 'terms-condition', element: <TermsCondition /> },

@@ -15,6 +15,7 @@ const path = [
     { path: '/buyer-registration', name: 'Buyer Registration' },
     { path: '/all-details', name: 'All Details' },
     { path: '/seller-transection', name: 'Sellers Transection' },
+    { path: '/transection-details', name: 'Transection Details' },
 ];
 
 const HeaderDashboard = () => {
@@ -35,7 +36,8 @@ const HeaderDashboard = () => {
                     {currentPage ? (
                         currentPage.path === '/customer-details' ||
                         currentPage.path === '/post-details' ||
-                        currentPage.path === '/all-details' ? (
+                        currentPage.path === '/all-details' ||
+                        currentPage.path == '/transection-details' ? (
                             <div className="flex items-center gap-2">
                                 <HiArrowSmallLeft className="" size={25} /> <PageTitle>{currentPage.name}</PageTitle>
                             </div>

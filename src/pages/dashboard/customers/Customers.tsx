@@ -1,8 +1,7 @@
-import { Input, Table } from 'antd';
+import { Table } from 'antd';
 import { useState } from 'react';
 import { CiCircleInfo } from 'react-icons/ci';
 import { GoLock, GoUnlock } from 'react-icons/go';
-import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import type { TableColumnsType } from 'antd';

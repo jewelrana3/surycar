@@ -17,10 +17,10 @@ function App() {
                         Table: {
                             headerColor: '#5C5C5C',
                             headerBg: '',
-                            colorBgContainer: '#FFFFFF ',
+                            colorBgContainer: '#F9F9F9 ',
                             colorText: '#767676',
                             headerSplitColor: '#929292',
-                            borderColor: '#FFFFFF',
+                            borderColor: '#F9F9F9',
                             padding: 6,
 
                             fontFamily: 'Poppins',
