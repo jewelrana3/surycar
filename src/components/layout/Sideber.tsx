@@ -62,7 +62,7 @@ const Sidebar = () => {
                             className={activeMenu === item.path ? 'bg-[#188a50] rounded-r-full text-white w-[90%]' : ''}
                         >
                             <Link className={`flex items-center gap-4  p-6 py-2`} to={item.path}>
-                                <span className={isActive ? `text-white` : 'text-gray-500'}>{item.icon}</span>
+                                <span className={isActive ? `text-white` : ''}>{item.icon}</span>
                                 {item.label}
                             </Link>
                         </div>
