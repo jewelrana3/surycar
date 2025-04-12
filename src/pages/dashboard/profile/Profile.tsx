@@ -1,88 +1,54 @@
-import { Form, Input, Avatar, ConfigProvider } from 'antd';
-import { MdOutlineArrowBackIosNew, MdOutlineModeEdit } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
+import { CiSettings } from 'react-icons/ci';
+import { LiaEditSolid } from 'react-icons/lia';
+import { Link } from 'react-router-dom';
 
-import CustomButton from '../../../components/shared/Button';
+const profileData = [
+    { label: 'Name :', value: 'Admin Humphrey' },
+    { label: 'Position :', value: 'Admin' },
+    { label: 'Id. no. :', value: 'MM4178MRV2' },
+    { label: 'Email :', value: 'Asadujjaman101@bd.com' },
+    { label: 'Contact Number :', value: '073 155 4568' },
+    { label: 'Date of Birth :', value: '12 Nov, 2024' },
+    { label: 'Gender :', value: 'Male' },
+    { label: 'Address :', value: '284 Daffodil Dr, Mount Frere, Eastern Cape - 5088 South Africa' },
+];
 
-export default function Profile() {
-    const navigate = useNavigate();
-    const [form] = Form.useForm();
-
+const Profile = () => {
     return (
-        <div className="flex justify-center items-center">
-            {/* profile */}
-
-            <div className="w-[1035px] mx-auto">
-                <div className="flex items-center gap-4 font-semibold text-[20px]" onClick={() => navigate(-1)}>
-                    <button className="text-xl">
-                        <MdOutlineArrowBackIosNew />
+        <div className=" bg-white rounded-lg shadow-md flex space-x-14 p-5">
+            <div className="">
+                <img
+                    className="h-[252px] w-[251px]  object-cover rounded-xl"
+                    src="https://i.ibb.co.com/2YWbmYtm/df96ee07b3ad8cfad69be782cb4a27ca.jpg"
+                    alt="Profile"
+                />
+                <div className="text-center mt-3">
+                    <h1>Admin Humphrey</h1>
+                    <p className="text-[#006EEE]">Admin</p>
+                </div>
+            </div>
+            <div className="space-y-4 flex-1">
+                {profileData.map((item, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                        <span className=" text-[#A1A1A1]">{item.label}</span>
+                        <div className="text-sm text-[#5C5C5C]">{item.value}</div>
+                    </div>
+                ))}
+            </div>
+            <div className="text-gray-500  cursor-pointer space-x-3">
+                <Link to="/change-password">
+                    <button>
+                        <CiSettings size={26} />
                     </button>
-                    <button>Profile</button>
-                </div>
-
-                <div className="flex items-center justify-between gap-4  mt-12">
-                    <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <Avatar
-                                size={100}
-                                src="https://i.ibb.co.com/xJdQCTG/download.jpg"
-                                className="border-2 border-[#8AC2FF]"
-                            />
-                        </div>
-
-                        <div>{/* <h3 className="font-semibold text-2xl">{data?.data?.name}</h3> */}</div>
-                    </div>
-                    <div className="">
-                        <Link to="/edit-profile">
-                            <CustomButton className=" flex items-center justify-center space-x-2 cursor-pointer">
-                                <MdOutlineModeEdit className="text-xl mr-2" />
-                                Edit Profile
-                            </CustomButton>
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="mt-5">
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Input: {
-                                    hoverBorderColor: '#EBF4FF',
-                                    activeBorderColor: '#EBF4FF',
-                                },
-                            },
-                        }}
-                    >
-                        <Form form={form} layout="vertical">
-                            <div>
-                                <span className=" text-[20px] font-semibold ">Full Name</span>
-                                <div className="mt-3 ">
-                                    <Form.Item name="name" rules={[{ required: true }]}>
-                                        <Input
-                                            style={{ border: '1px solid gray' }}
-                                            className="h-14 !bg-black   rounded-xl border-none !text-white placeholder:text-gray-400"
-                                            placeholder="enter your name"
-                                        />
-                                    </Form.Item>
-                                </div>
-                            </div>
-
-                            <div>
-                                <span className=" text-[20px] font-semibold ">Email</span>
-                                <div className="mt-3">
-                                    <Form.Item name="email" rules={[{ required: true }]}>
-                                        <Input
-                                            style={{ border: '1px solid gray' }}
-                                            className="!bg-black h-14 !text-white  rounded-xl border-none placeholder:text-gray-400"
-                                            placeholder="enter your gmail"
-                                        />
-                                    </Form.Item>
-                                </div>
-                            </div>
-                        </Form>
-                    </ConfigProvider>
-                </div>
+                </Link>
+                <Link to="/edit-profile">
+                    <button>
+                        <LiaEditSolid size={26} />
+                    </button>
+                </Link>
             </div>
         </div>
     );
-}
+};
+
+export default Profile;

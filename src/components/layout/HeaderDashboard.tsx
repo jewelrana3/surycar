@@ -15,10 +15,20 @@ const path = [
     { path: '/buyer-registration', name: 'Buyer Registration' },
     { path: '/all-details', name: 'All Details' },
     { path: '/seller-transection', name: 'Sellers Transection' },
+    { path: '/package', name: 'Package Setting' },
     { path: '/transection-details', name: 'Transection Details' },
+    { path: '/slider1', name: 'Slider 1' },
+    { path: '/slider2', name: 'Slider 2' },
+
     { path: '/work-functionality', name: 'Work Functionality' },
     { path: '/terms-condition', name: 'Terms Condition' },
+    { path: '/about-us', name: 'About Us' },
     { path: '/privacy-policy', name: 'Privacy Policy' },
+    { path: '/notifications', name: 'Notifications' },
+    { path: '/profile', name: 'Profile' },
+    { path: '/edit-profile', name: 'Edit Profile' },
+    { path: '/change-password', name: 'Change Password' },
+    { path: '/manage-admin', name: 'Manage Admin' },
 ];
 
 const HeaderDashboard = () => {
@@ -54,7 +64,7 @@ const HeaderDashboard = () => {
                 <div className="flex items-center justify-end gap-5 h-full">
                     <div>
                         {/*notification icons */}
-                        <Link to={'/notification'}>
+                        <Link to={'/notifications'}>
                             <div className="size-10 rounded-full flex items-center justify-center bg-[#F2F2F2]">
                                 <button className="py-4 px-1 relative border-2 border-transparent rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out">
                                     <span className="absolute inset-0 -top-4  -mr-4">

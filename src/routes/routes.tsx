@@ -25,6 +25,7 @@ import Slider1 from '../pages/dashboard/slider1/Slider1';
 import WorkFunction from '../pages/dashboard/WorkFunction';
 import AboutUS from '../pages/dashboard/AboutUs';
 import ManageAdmin from '../pages/dashboard/admin/ManageAdmin';
+import Slider2 from '../pages/dashboard/slider2/Slider2';
 
 const router = createBrowserRouter([
     {
@@ -43,13 +44,14 @@ const router = createBrowserRouter([
             { path: 'transection-details', element: <AllDetailsSeller /> },
             { path: 'package', element: <PackageSetting /> },
             { path: 'slider1', element: <Slider1 /> },
+            { path: 'slider2', element: <Slider2 /> },
             { path: 'manage-admin', element: <ManageAdmin /> },
 
             { path: 'work-functionality', element: <WorkFunction /> },
             { path: 'about-us', element: <AboutUS /> },
             { path: 'privacy-policy', element: <PrivacyPolicy /> },
             { path: 'terms-condition', element: <TermsCondition /> },
-            { path: 'notification', element: <Notification /> },
+            { path: 'notifications', element: <Notification /> },
             { path: 'profile', element: <Profile /> },
             { path: 'edit-profile', element: <EditProfile /> },
             { path: 'change-password', element: <ChangePassword /> },

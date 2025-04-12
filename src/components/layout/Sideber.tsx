@@ -1,50 +1,38 @@
-import { Menu } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { CiFileOn, CiLogout, CiSettings, CiUser } from 'react-icons/ci';
 import logo from '../../../public/logo.svg';
-import { CiFileOn, CiLogout } from 'react-icons/ci';
+import { GrAnalytics, GrUserAdmin } from 'react-icons/gr';
+import { LuFileSliders } from 'react-icons/lu';
+import { BsList, BsListNested } from 'react-icons/bs';
+import { FcWorkflow } from 'react-icons/fc';
+import { PiNoteDuotone } from 'react-icons/pi';
+import { TbNotes } from 'react-icons/tb';
+import { LiaUserFriendsSolid } from 'react-icons/lia';
+import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown, MdTransform } from 'react-icons/md';
+import { RiListSettingsLine } from 'react-icons/ri';
+import { useState } from 'react';
 
 const menuItems = [
-    { label: 'Analytics', path: '/', icon: <img src="/analytics.svg" alt="analytics" /> },
-    { label: 'Customers', path: '/customers', icon: <img src="/customer.svg" alt="customer" /> },
+    { label: 'Analytics', path: '/', icon: <GrAnalytics size={22} /> }, // Using React Icon here
+    { label: 'Customers', path: '/customers', icon: <CiUser size={22} /> },
     { label: 'Post List', path: '/post-list', icon: <CiFileOn size={22} /> },
-    { label: 'Buyer Registrations', path: '/buyer-registration', icon: <img src="/buy.svg" alt="buy" /> },
-    {
-        label: 'Sellers Transection',
-        path: '/seller-transection',
-        icon: <img src="/transection.svg" alt="Transections" />,
-    },
-    {
-        label: 'Package Setting ',
-        path: '/package',
-        icon: <img src="/Package.svg" alt="Package" />,
-    },
+    { label: 'Buyer Registrations', path: '/buyer-registration', icon: <LiaUserFriendsSolid size={22} /> },
+    { label: 'Sellers Transaction', path: '/seller-transection', icon: <MdTransform size={22} /> },
+    { label: 'Package Setting', path: '/package', icon: <RiListSettingsLine size={22} /> },
 ];
 
 const settings = [
     {
         label: <span className="text-[18px]">Setting</span>,
-        icon: <img src="/setting.svg" alt="setting" />,
+        icon: <CiSettings size={24} />,
         path: '',
         children: [
-            { label: 'Slider 1', path: '/slider1', icon: <img src="/slider1.svg" alt="slider1" /> },
-            { label: 'Slider 2', path: '/slider2', icon: <img src="/slider2.svg" alt="slider2" /> },
-            {
-                label: 'Work Functionality',
-                path: '/work-functionality',
-                icon: <img src="/work.svg" alt="work" />,
-            },
-            { label: 'About Us', path: '/about-us', icon: <img src="/about.svg" alt="about" /> },
-
-            {
-                label: 'Privacy & Policy',
-                path: '/privacy-policy',
-                icon: <img src="/policy.svg" alt="policy" />,
-            },
-            {
-                label: 'Terms & Condition',
-                path: '/terms-condition',
-                icon: <img src="/terms.svg" alt="terms-condition" />,
-            },
+            { label: 'Slider 1', path: '/slider1', icon: <BsListNested size={22} /> },
+            { label: 'Slider 2', path: '/slider2', icon: <BsList size={22} /> },
+            { label: 'Work Functionality', path: '/work-functionality', icon: <FcWorkflow size={22} /> },
+            { label: 'About Us', path: '/about-us', icon: <LuFileSliders size={22} /> },
+            { label: 'Privacy & Policy', path: '/privacy-policy', icon: <PiNoteDuotone size={22} /> },
+            { label: 'Terms & Condition', path: '/terms-condition', icon: <TbNotes size={22} /> },
         ],
     },
 ];
@@ -52,50 +40,87 @@ const settings = [
 const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [activeMenu, setActiveMenu] = useState('/');
+    const [isSettingOpen, setIsSettingOpen] = useState(false);
 
     const handleLogout = () => {
         navigate('/login');
     };
     return (
-        <div className="h-screen" style={{ backgroundColor: 'white', color: 'black' }}>
+        <div className="h-screen" style={{ backgroundColor: 'white', color: 'black', fontFamily: 'Poppins' }}>
             <div className="flex items-center justify-center p-3">
                 <img src={logo} alt="Logo" className="w-32" />
             </div>
 
-            <Menu mode="inline" style={{ backgroundColor: 'white', color: 'black' }} className="mt-10">
+            <div style={{ backgroundColor: 'white', color: 'black' }} className="mt-10">
                 {menuItems.map((item) => {
                     const isActive = location.pathname === item.path;
                     return (
-                        <Menu.Item
+                        <div
+                            onClick={() => setActiveMenu(item.path)}
                             key={item.path}
-                            icon={<span className={isActive ? `text-white` : 'text-gray-500'}>{item.icon}</span>}
+                            className={activeMenu === item.path ? 'bg-[#188a50] rounded-r-full text-white w-[90%]' : ''}
                         >
-                            <Link className="" to={item.path}>
+                            <Link className={`flex items-center gap-4  p-6 py-2`} to={item.path}>
+                                <span className={isActive ? `text-white` : 'text-gray-500'}>{item.icon}</span>
                                 {item.label}
                             </Link>
-                        </Menu.Item>
+                        </div>
                     );
                 })}
 
-                {settings.map((setting) => (
-                    <Menu.SubMenu key={setting.path} icon={setting.icon} title={setting.label}>
-                        {setting.children.map((child) => (
-                            <Menu.Item key={child.path} icon={child.icon}>
-                                <div className=" ">
-                                    <Link to={child.path}>{child.label}</Link>
-                                </div>
-                            </Menu.Item>
-                        ))}
-                    </Menu.SubMenu>
-                ))}
-                <Link to="/manage-admin">
-                    <div className="text-black flex  items-center gap-3 mt-3 text-[18px]  py-2 rounded-xl cursor-pointer ml-6">
+                <div onClick={() => setIsSettingOpen(!isSettingOpen)} className="cursor-pointer">
+                    <div className="flex items-center ml-6 my-2 ">
+                        <div className="flex gap-3">
+                            <span>
+                                <CiSettings size={26} />
+                            </span>
+                            <span> Setting</span>
+                        </div>
+                        <div className="ml-28">
+                            {isSettingOpen ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
+                        </div>
+                    </div>
+                </div>
+                <div className={isSettingOpen ? 'block' : 'hidden'}>
+                    {settings.map((setting) => {
+                        return (
+                            <div key={setting.path}>
+                                {setting.children.map((child) => {
+                                    return (
+                                        <div
+                                            key={child.path}
+                                            onClick={() => setActiveMenu(child.path)}
+                                            className={
+                                                activeMenu === child.path
+                                                    ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
+                                                    : ''
+                                            }
+                                        >
+                                            <Link to={child.path} className={`flex items-center gap-4 p-6 py-2`}>
+                                                <span>{child.icon}</span>
+                                                {child.label}
+                                            </Link>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div
+                    onClick={() => setActiveMenu('/manage-admin')}
+                    className={activeMenu === '/manage-admin' ? 'bg-[#188a50] rounded-r-full text-white w-[90%]' : ''}
+                >
+                    <Link to={'/manage-admin'} className={`flex items-center gap-4  p-6 py-2`}>
                         <span>
-                            <CiLogout className="font-bold" size={23} />
+                            <GrUserAdmin className="font-bold" size={23} />
                         </span>
                         <span>Manage Admin</span>
-                    </div>
-                </Link>
+                    </Link>
+                </div>
+
                 <div
                     className="text-black flex justify-center items-center gap-3 mt-10 text-[18px]  py-2 rounded-xl cursor-pointer"
                     onClick={handleLogout}
@@ -105,7 +130,7 @@ const Sidebar = () => {
                     </span>
                     <span>Logout</span>
                 </div>
-            </Menu>
+            </div>
         </div>
     );
 };
