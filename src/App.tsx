@@ -29,6 +29,21 @@ function App() {
                             colorBgContainer: '#F4F4F4',
                             hoverBorderColor: '',
                             activeBorderColor: '',
+                            // fontSize: 16,
+                            fontWeightStrong: 600,
+                            colorText: '#929292',
+                        },
+
+                        Switch: {
+                            handleBg: '#188A50',
+                            colorPrimary: '#E7E7E7',
+                            colorPrimaryHover: '#E7E7E7np',
+                        },
+                        DatePicker: {
+                            hoverBorderColor: '',
+                            activeBorderColor: '',
+                            colorText: '#929292',
+                            fontSize: 14,
                         },
                     },
                 }}

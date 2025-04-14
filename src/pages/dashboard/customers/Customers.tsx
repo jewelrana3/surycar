@@ -192,13 +192,13 @@ export default function Customers() {
 
     return (
         <div className="bg-white rounded-lg">
-            <SearchCategory />
+            <SearchCategory data={data} />
 
             {/* Table with Checkbox Selection */}
             <Table
                 columns={columns}
                 dataSource={data}
-                rowKey={(record, index) => `${record.no} ${index}`}
+                rowKey={(record) => `${record.key}`}
                 rowSelection={rowSelection}
             />
         </div>

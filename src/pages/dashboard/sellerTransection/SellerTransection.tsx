@@ -136,12 +136,12 @@ export default function SellerTransection() {
 
     return (
         <div className="bg-white rounded-lg">
-            <SearchCategory />
+            {/* <SearchCategory /> */}
             {/* Table with Checkbox Selection */}
             <Table
                 columns={columns}
                 dataSource={data}
-                rowKey={(record, index) => `${record.no} ${index}`}
+                rowKey={(record) => `${record.key}`}
                 rowSelection={rowSelection}
             />
         </div>

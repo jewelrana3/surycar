@@ -27,12 +27,12 @@ export default function Chart() {
     };
 
     return (
-        <div className="my-4 bg-white shadow-md rounded-lg px-3 pt-2">
+        <div className="my-4 bg-white shadow-md rounded-lg px-3 pt-1">
             <div className="flex items-center justify-between">
                 <h1 className="text-xl text-[#242731]">
-                    <span className=" font-semibold">Earning</span> Statics
+                    <span className=" font-medium">Earning</span> Statics
                 </h1>
-                <Select value={selectedYear} onChange={handleYearChange} className="w-32 h-[40px]">
+                <Select value={selectedYear} onChange={handleYearChange} className="w-32 h-[40px] mt-2">
                     <Option value="2025">2025</Option>
                     <Option value="2026">2026</Option>
                     <Option value="2027">2027</Option>

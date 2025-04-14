@@ -193,9 +193,6 @@ export default function BuyerRegistration() {
                             <CiCircleInfo size={25} className="text-[#6CA0DC]" />
                         </button>
                     </Link>
-                    {/* <button className="" onClick={() => handleLock(record.no)}>
-                        {lock[record.no] ? <GoLock size={25} /> : <GoUnlock size={25} className="text-red-400" />}
-                    </button> */}
                 </div>
             ),
         },
@@ -203,12 +200,12 @@ export default function BuyerRegistration() {
 
     return (
         <div className="bg-white rounded-lg">
-            <SearchCategory />
+            {/* <SearchCategory /> */}
             {/* Table with Checkbox Selection */}
             <Table
                 columns={columns}
                 dataSource={data}
-                rowKey={(record, index) => `${record.no} ${index}`}
+                rowKey={(record) => `${record.key}`}
                 rowSelection={rowSelection}
             />
         </div>

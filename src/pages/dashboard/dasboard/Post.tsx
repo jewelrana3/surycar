@@ -22,7 +22,7 @@ export default function Post() {
             <div className="flex items-center justify-between">
                 <h1 className="text-xl">
                     {' '}
-                    <span className=" font-semibold">Post</span> Statics
+                    <span className=" font-medium">Post</span> Statics
                 </h1>
                 <Select defaultValue="Year" className="w-28 h-[30px]">
                     <Option value="2025">2025</Option>

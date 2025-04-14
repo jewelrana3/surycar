@@ -32,7 +32,7 @@ export default function User() {
             <div className="flex items-center justify-between">
                 <h1 className="text-xl">
                     {' '}
-                    <span className=" font-semibold">User</span> Statics
+                    <span className=" font-medium">User</span> Statics
                 </h1>
                 <Select value={selectedYear} onChange={handleYearChange} className="w-28 h-[30px]">
                     <Option value="2025">2025</Option>

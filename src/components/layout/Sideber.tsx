@@ -1,5 +1,5 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { CiFileOn, CiLogout, CiSettings, CiUser } from 'react-icons/ci';
+import { Link, useNavigate } from 'react-router-dom';
+import { CiFileOn, CiSettings, CiUser } from 'react-icons/ci';
 import logo from '../../../public/logo.svg';
 import { GrAnalytics, GrUserAdmin } from 'react-icons/gr';
 import { LuFileSliders } from 'react-icons/lu';
@@ -8,7 +8,7 @@ import { FcWorkflow } from 'react-icons/fc';
 import { PiNoteDuotone } from 'react-icons/pi';
 import { TbNotes } from 'react-icons/tb';
 import { LiaUserFriendsSolid } from 'react-icons/lia';
-import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown, MdTransform } from 'react-icons/md';
+import { MdKeyboardArrowUp, MdLogout, MdOutlineKeyboardArrowDown, MdTransform } from 'react-icons/md';
 import { RiListSettingsLine } from 'react-icons/ri';
 import { useState } from 'react';
 
@@ -39,7 +39,6 @@ const settings = [
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const [activeMenu, setActiveMenu] = useState('/');
     const [isSettingOpen, setIsSettingOpen] = useState(false);
 
@@ -47,14 +46,13 @@ const Sidebar = () => {
         navigate('/login');
     };
     return (
-        <div className="h-screen" style={{ backgroundColor: 'white', color: 'black', fontFamily: 'Poppins' }}>
-            <div className="flex items-center justify-center p-3">
+        <div className="h-screen" style={{ backgroundColor: 'white', fontFamily: 'Poppins' }}>
+            <div className="flex items-center justify-center p-3 cursor-pointer" onClick={() => setActiveMenu('/')}>
                 <img src={logo} alt="Logo" className="w-32" />
             </div>
 
-            <div style={{ backgroundColor: 'white', color: 'black' }} className="mt-10">
+            <div style={{ backgroundColor: 'white', color: '#929292' }} className="mt-10">
                 {menuItems.map((item) => {
-                    const isActive = location.pathname === item.path;
                     return (
                         <div
                             onClick={() => setActiveMenu(item.path)}
@@ -62,7 +60,7 @@ const Sidebar = () => {
                             className={activeMenu === item.path ? 'bg-[#188a50] rounded-r-full text-white w-[90%]' : ''}
                         >
                             <Link className={`flex items-center gap-4  p-6 py-2`} to={item.path}>
-                                <span className={isActive ? `text-white` : ''}>{item.icon}</span>
+                                <span>{item.icon}</span>
                                 {item.label}
                             </Link>
                         </div>
@@ -82,31 +80,29 @@ const Sidebar = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* dublicate */}
                 <div className={isSettingOpen ? 'block' : 'hidden'}>
-                    {settings.map((setting) => {
-                        return (
-                            <div key={setting.path}>
-                                {setting.children.map((child) => {
-                                    return (
-                                        <div
-                                            key={child.path}
-                                            onClick={() => setActiveMenu(child.path)}
-                                            className={
-                                                activeMenu === child.path
-                                                    ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
-                                                    : ''
-                                            }
-                                        >
-                                            <Link to={child.path} className={`flex items-center gap-4 p-6 py-2`}>
-                                                <span>{child.icon}</span>
-                                                {child.label}
-                                            </Link>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        );
-                    })}
+                    {settings.map((setting) => (
+                        <div key={setting.path}>
+                            {setting.children.map((child) => (
+                                <div
+                                    key={`${setting.path}-${child.path}`}
+                                    onClick={() => setActiveMenu(child.path)}
+                                    className={
+                                        activeMenu === child.path
+                                            ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
+                                            : ''
+                                    }
+                                >
+                                    <Link to={child.path} className="flex items-center gap-4 p-6 py-2">
+                                        <span>{child.icon}</span>
+                                        {child.label}
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
 
                 <div
@@ -122,11 +118,11 @@ const Sidebar = () => {
                 </div>
 
                 <div
-                    className="text-black flex justify-center items-center gap-3 mt-10 text-[18px]  py-2 rounded-xl cursor-pointer"
+                    className=" flex items-center mt-20 gap-3 text-[#929292]  text-[18px]  py-2 rounded-xl cursor-pointer ml-6"
                     onClick={handleLogout}
                 >
                     <span>
-                        <CiLogout className="font-bold" size={23} />
+                        <MdLogout className="font-bold" size={23} />
                     </span>
                     <span>Logout</span>
                 </div>
