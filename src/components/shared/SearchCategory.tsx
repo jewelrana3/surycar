@@ -36,31 +36,29 @@ const path = [
 ];
 
 interface SearchCategoryProps {
-    data: DataType[]; // data prop should be an array of DataType
+    data?: DataType[]; // data prop should be an array of DataType
 }
 
 export default function SearchCategory({ data }: SearchCategoryProps) {
     const location = useLocation();
     const currentPath = location.pathname;
 
-    // Find the current page based on the current URL path
     const currentPage = path.find((item) => item.path === currentPath);
     console.log(currentPage);
 
-    // Function to generate the PDF
     const generatePDF = () => {
         const doc = new jsPDF();
 
         doc.setFontSize(16);
         doc.text('Customer List Report', 20, 20);
 
-        const headers = ['S.No', 'User Name', 'Address', 'Email', 'Contact No', 'Register Date'];
+        // const headers = ['S.No', 'User Name', 'Address', 'Email', 'Contact No', 'Register Date'];
 
-        const rows = data.map((item) => [item.no, item.name, item.address, item.email, item.contact, item.date]);
+        const rows = data?.map((item) => [item.no, item.name, item.address, item.email, item.contact, item.date]);
         autoTable(doc, {
-            head: [headers],
+            head: [],
             body: rows,
-            startY: 30, // Position where the table will start
+            startY: 30,
         });
 
         // Save the generated PDF

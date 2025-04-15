@@ -3,13 +3,27 @@ import { ConfigProvider, Form, Input } from 'antd';
 import { useNavigate } from 'react-router';
 import newPass from '../../../public/auth/new-pass.svg';
 import Button from '../../components/shared/Button';
+import { useResetPasswordMutation } from '../../redux/apiSlice/authSlice';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const NewPassword = () => {
     const navigate = useNavigate();
+    const [resetPassword, { isError, isSuccess, data, isLoading }] = useResetPasswordMutation();
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            toast.success('Password reset successfully');
+            navigate('/login');
+        } else {
+            toast.error('Password reset failed');
+        }
+    }, [isError, isSuccess, data, navigate]);
 
     const onFinish = async (values: { newPassword: string; confirmPassword: string }) => {
         console.log(values);
-        navigate('/login');
+
+        await resetPassword(values);
     };
 
     return (
@@ -81,7 +95,7 @@ const NewPassword = () => {
 
                             <Form.Item>
                                 <Button className="bg-bgYellow w-full rounded-md text-[#181818] mt-5" htmlType="submit">
-                                    {/* {isLoading ? 'Updating' : 'Update Password'} */}
+                                    {isLoading ? 'Updating' : 'Update Password'}
                                     Confirm
                                 </Button>
                             </Form.Item>

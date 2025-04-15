@@ -1,16 +1,50 @@
 import { Checkbox, ConfigProvider, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/shared/Button';
+import { useLoginMutation } from '../../redux/apiSlice/authSlice';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+    const [login, { isError, isSuccess, data, error }] = useLoginMutation();
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
+    useEffect(() => {
+        if (isSuccess && data) {
+            Swal.fire({
+                text: data.message,
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+            }).then(() => {
+                if (data) {
+                    localStorage.setItem('accessToken', data?.data?.accessToken);
+                    sessionStorage.setItem('accessToken', data?.data?.accessToken);
+                    navigate('/');
+                }
+            });
+        } else if (isError) {
+            Swal.fire({
+                title: 'Login failed',
+                //@ts-ignore
+                text: error?.data?.message,
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
+        }
+    }, [isError, isSuccess, data, error, navigate]);
+
     const onFinish = async (values: { email: string; password: string }) => {
         console.log(values);
-        navigate('/');
-
         form.resetFields();
+
+        const data = {
+            email: values?.email,
+            password: values?.password,
+        };
+
+        await login(data).unwrap();
     };
 
     return (

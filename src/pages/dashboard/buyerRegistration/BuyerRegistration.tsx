@@ -200,7 +200,7 @@ export default function BuyerRegistration() {
 
     return (
         <div className="bg-white rounded-lg">
-            {/* <SearchCategory /> */}
+            <SearchCategory />
             {/* Table with Checkbox Selection */}
             <Table
                 columns={columns}

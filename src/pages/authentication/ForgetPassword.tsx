@@ -3,11 +3,55 @@ import { useNavigate } from 'react-router';
 import forgots from '../../../public/auth/forgot.svg';
 import Button from '../../components/shared/Button';
 
+import Swal from 'sweetalert2';
+import { useForgetPassowrdMutation } from '../../redux/apiSlice/authSlice';
+
 const ForgetPassword = () => {
+    const [forgetPassowrd] = useForgetPassowrdMutation();
     const navigate = useNavigate();
-    const onFinish = async (values: any) => {
+
+    const onFinish = async (values: { email: string }) => {
         console.log(values);
-        navigate('/verify-otp');
+
+        try {
+            const res = await forgetPassowrd(values);
+
+            if (res?.data?.success) {
+                Swal.fire({
+                    text: res?.data?.message,
+                    icon: 'success',
+                    timer: 500,
+                    showConfirmButton: false,
+                }).then(() => {
+                    const value = {
+                        email: values?.email,
+                    };
+
+                    if (values?.email) {
+                        localStorage.setItem('email', JSON.stringify(value));
+                    }
+
+                    navigate('/verify-otp');
+                });
+            } else {
+                Swal.fire({
+                    title: 'Oops',
+                    //@ts-ignore
+                    text: res?.error?.data?.message || 'An error occurred, please try again.',
+                    icon: 'error',
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Something went wrong. Please try again later.',
+                icon: 'error',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        }
     };
 
     return (

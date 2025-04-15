@@ -3,18 +3,84 @@ import { ConfigProvider, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import otp from '../../../public/auth/otp.svg';
 import Button from '../../components/shared/Button';
+import { useResendOtpMutation, useVerifyEmailMutation } from '../../redux/apiSlice/authSlice';
+import Swal from 'sweetalert2';
 
 // import Swal from 'sweetalert2';
 
 const VerifyOtp = () => {
+    const [verifyEmail] = useVerifyEmailMutation();
+    const [resendOtp] = useResendOtpMutation();
+    const userMail = localStorage.getItem('email');
+    const email = userMail ? JSON.parse(userMail) : '';
+    console.log(email);
     const navigate = useNavigate();
 
-    // const handleResendCode = async () => {
-    // };
+    const handleResendEmail = async () => {
+        const value = {
+            email: email?.email,
+        };
+        await resendOtp(value).then((res) => {
+            if (res?.data?.success) {
+                Swal.fire({
+                    text: res?.data?.message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            } else {
+                Swal.fire({
+                    title: 'Oops',
+                    //@ts-ignore
+                    text: res?.error?.data?.message,
+                    icon: 'error',
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+            }
+        });
+    };
 
     const onFinish = async (values: { otp: number | null }) => {
-        console.log(values);
-        navigate('/new-password');
+        const data = {
+            email: email?.email,
+            oneTimeCode: Number(values?.otp),
+        };
+
+        try {
+            await verifyEmail(data).then((res) => {
+                if (res?.data?.success) {
+                    Swal.fire({
+                        text: res?.data?.message,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        console.log(res);
+
+                        localStorage.setItem('resetToken', res?.data?.data);
+                        navigate('/new-password');
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Oops',
+                        //@ts-ignore
+                        text: res?.error?.data?.message,
+                        icon: 'error',
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                }
+            });
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Something went wrong. Please try again later.',
+                icon: 'error',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        }
     };
 
     return (
@@ -88,7 +154,7 @@ const VerifyOtp = () => {
                                 </p>
                                 <p
                                     className="text-[#79CAA1] font-semibold underline cursor-pointer"
-                                    // onClick={handleResendCode}
+                                    onClick={handleResendEmail}
                                 >
                                     Resend
                                 </p>
