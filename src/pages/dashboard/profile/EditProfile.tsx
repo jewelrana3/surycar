@@ -32,7 +32,9 @@ const EditProfile = () => {
                 lastName: data?.data?.lastName,
                 address: data?.data?.address,
             });
-            setPreviewUrl(data?.data?.profile || null);
+            setPreviewUrl(
+                data?.data?.profile?.startsWith('http') ? data?.data?.profile : `${imgUrl}${data?.data?.profile}`,
+            );
         }
     }, [data, form]);
 
@@ -84,11 +86,7 @@ const EditProfile = () => {
                 >
                     {previewUrl ? (
                         <img
-                            src={
-                                data?.data?.profile?.startsWith('http')
-                                    ? data?.data?.profile
-                                    : `${imgUrl}${data?.data?.profile}` || previewUrl
-                            }
+                            src={previewUrl}
                             // src={previewUrl}
                             alt="pic"
                             className="w-48 h-56"

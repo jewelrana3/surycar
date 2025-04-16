@@ -5,37 +5,22 @@ import { LiaEditSolid } from 'react-icons/lia';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FiPlus } from 'react-icons/fi';
 import Swal from 'sweetalert2';
-import Slider1Modal from '../../../modal/Slider1Modal';
+import { useDeletePromotionMutation, useGetPromotionQuery } from '../../../redux/promotion/promotion';
+import { imgUrl } from '../../../redux/api/baseApi';
+import PromotionModal from '../../../modal/PromotionModal';
 
 interface DataType {
+    _id: string;
     key: string;
     name: string;
+    car: string;
     image: string;
-    code: string;
 }
 
-const data: DataType[] = [
-    {
-        key: '1',
-        name: 'Title name 1',
-        image: '/slider2/1.png',
-        code: '1234',
-    },
-    {
-        key: '2',
-        name: 'Title name 2',
-        image: '/slider2/2.svg',
-        code: '5645',
-    },
-    {
-        key: '3',
-        name: 'Title name 3',
-        image: '/slider2/3.svg',
-        code: '3444',
-    },
-];
-
 export default function Slider2() {
+    const { data: getPromotion, refetch } = useGetPromotionQuery(undefined);
+    const [deletePromotion] = useDeletePromotionMutation();
+    const data = getPromotion?.data;
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [slider1, setSlider1] = useState(false);
     const [edit, setEdit] = useState<DataType | null>(null);
@@ -49,7 +34,7 @@ export default function Slider2() {
         onChange: onSelectChange,
     };
 
-    const handleDelete = () => {
+    const handleDelete = (record: DataType) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -60,6 +45,8 @@ export default function Slider2() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
+                deletePromotion(record._id);
+                refetch();
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Your file has been deleted.',
@@ -73,7 +60,7 @@ export default function Slider2() {
         {
             title: 'S.No',
             key: 'serial',
-            render: (_text, _record, index) => index + 1, // ✅ Serial number without relying on data
+            render: (_text, _record, index) => index + 1,
         },
         {
             title: 'Slider Name',
@@ -82,16 +69,24 @@ export default function Slider2() {
             render: (text: string) => <a>{text}</a>,
         },
         {
+            title: 'Car Name',
+            dataIndex: 'car',
+            key: 'car',
+            // render: (text: string) => <a>{text}</a>,
+        },
+        {
             title: 'Slider Image',
             dataIndex: 'image',
             key: 'image',
-            render: (img: string) => <img src={img} alt="slider" className=" object-cover rounded" />,
+            render: (img: string) => (
+                <img
+                    src={img.startsWith('http') ? img : `${imgUrl}${img}`}
+                    alt="slider"
+                    className="object-cover rounded w-40 h-16"
+                />
+            ),
         },
-        {
-            title: 'Post Code',
-            dataIndex: 'code',
-            key: 'code',
-        },
+
         {
             title: 'Action',
             key: 'action',
@@ -105,7 +100,7 @@ export default function Slider2() {
                     >
                         <LiaEditSolid className="text-[#5C5C3D] text-[22px] cursor-pointer" />
                     </button>
-                    <button onClick={handleDelete}>
+                    <button onClick={() => handleDelete(record)}>
                         <RiDeleteBin6Line className=" text-[22px] cursor-pointer" />
                     </button>
                 </div>
@@ -129,8 +124,10 @@ export default function Slider2() {
             {/* modal */}
             {slider1 && (
                 //@ts-ignore
-                <Slider1Modal
+                <PromotionModal
+                    //@ts-ignore
                     edit={edit}
+                    refetch={refetch}
                     isOpen={slider1}
                     onClose={() => {
                         setSlider1(false), setEdit(null);

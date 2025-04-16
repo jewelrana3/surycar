@@ -44,7 +44,7 @@ const router = createBrowserRouter([
             { path: 'transection-details', element: <AllDetailsSeller /> },
             { path: 'package', element: <PackageSetting /> },
             { path: 'slider1', element: <Slider1 /> },
-            { path: 'slider2', element: <Slider2 /> },
+            { path: 'promotion', element: <Slider2 /> },
             { path: 'manage-admin', element: <ManageAdmin /> },
 
             { path: 'work-functionality', element: <WorkFunction /> },

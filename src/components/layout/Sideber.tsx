@@ -28,7 +28,7 @@ const settings = [
         path: '',
         children: [
             { label: 'Slider 1', path: '/slider1', icon: <BsListNested size={22} /> },
-            { label: 'Slider 2', path: '/slider2', icon: <BsList size={22} /> },
+            { label: 'Promotion', path: '/promotion', icon: <BsList size={22} /> },
             { label: 'Work Functionality', path: '/work-functionality', icon: <FcWorkflow size={22} /> },
             { label: 'About Us', path: '/about-us', icon: <LuFileSliders size={22} /> },
             { label: 'Privacy & Policy', path: '/privacy-policy', icon: <PiNoteDuotone size={22} /> },
