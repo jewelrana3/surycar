@@ -1,30 +1,68 @@
-import { useState } from 'react';
-import { Input, Form, DatePicker, Select } from 'antd';
+import { useEffect, useState } from 'react';
+import { Input, Form } from 'antd';
 import Button from '../../../components/shared/Button';
 import { BiUpload } from 'react-icons/bi';
+import { useGetProfileQuery, useUpdateProfileMutation } from '../../../redux/profile/profile';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { imgUrl } from '../../../redux/api/baseApi';
+
+interface ProfileData {
+    firstName: string;
+    lastName: string;
+    address: string;
+    profile: string | null;
+}
 
 const EditProfile = () => {
+    const { data, refetch } = useGetProfileQuery(undefined);
+    const [updateProfile] = useUpdateProfileMutation();
+
     const [form] = Form.useForm();
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const [profileImage, setProfileImage] = useState<File | null>(null);
+    const navigate = useNavigate();
 
-    const onFinish = (values: string) => {
-        const formData = new FormData();
-        if (previewUrl) {
-            formData.append('image', previewUrl);
+    console.log(data?.data?.profile);
+
+    useEffect(() => {
+        if (data?.data) {
+            form.setFieldsValue({
+                firstName: data?.data?.firstName,
+                lastName: data?.data?.lastName,
+                address: data?.data?.address,
+            });
+            setPreviewUrl(data?.data?.profile || null);
         }
-        console.log(formData);
-        console.log(values);
-    };
+    }, [data, form]);
 
-    const onChange = (values: string) => {
-        console.log(values);
+    const onFinish = async (values: ProfileData) => {
+        const formData = new FormData();
+        formData.append('firstName', values.firstName);
+        formData.append('lastName', values.lastName);
+
+        if (profileImage) {
+            formData.append('image', profileImage);
+        }
+
+        try {
+            const res = await updateProfile(formData);
+            if (res?.data?.success) {
+                toast.success('Profile updated successfully!');
+                form.resetFields();
+                navigate('/profile');
+                refetch();
+            }
+        } catch {
+            toast.error('Profile updated Failed!');
+        }
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            console.log('File selected:', file);
-            setPreviewUrl(URL.createObjectURL(file));
+            setProfileImage(file);
+            setPreviewUrl(URL.createObjectURL(file)); // Set preview URL for image
         }
     };
 
@@ -45,7 +83,16 @@ const EditProfile = () => {
                     onClick={() => document.getElementById('file')?.click()}
                 >
                     {previewUrl ? (
-                        <img src={previewUrl} alt="pic" />
+                        <img
+                            src={
+                                data?.data?.profile?.startsWith('http')
+                                    ? data?.data?.profile
+                                    : `${imgUrl}${data?.data?.profile}` || previewUrl
+                            }
+                            // src={previewUrl}
+                            alt="pic"
+                            className="w-48 h-56"
+                        />
                     ) : (
                         <div className="">
                             <span className="">
@@ -59,20 +106,20 @@ const EditProfile = () => {
             <Form form={form} onFinish={onFinish} layout="vertical" className="text-[#606060] font-medium mt-5">
                 <div className="grid grid-cols-2 gap-5">
                     <div>
-                        <span>name</span>
-                        <Form.Item name="name" rules={[{ required: true, message: 'Please enter name' }]}>
+                        <span>First Name</span>
+                        <Form.Item name="firstName" rules={[{ required: true, message: 'Please enter first name' }]}>
                             <Input placeholder="Enter name" className="rounded-md h-10" />
                         </Form.Item>
                     </div>
                     <div>
-                        <span>Date of Birth</span>
-                        <Form.Item name="Date of Birth" rules={[{ required: true, message: 'Please date of birth' }]}>
-                            <DatePicker className="w-full h-10 cursor-pointer" />
+                        <span>Last Name</span>
+                        <Form.Item name="lastName" rules={[{ required: true, message: 'Please enter last name' }]}>
+                            <Input placeholder="Enter name" className="rounded-md h-10" />
                         </Form.Item>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-5">
+                {/* <div className="grid grid-cols-2 gap-5">
                     <div>
                         <span>Contact Number</span>
                         <Form.Item name="contact" rules={[{ required: true, message: 'Please enter contact number' }]}>
@@ -89,21 +136,21 @@ const EditProfile = () => {
                             </Select>
                         </Form.Item>
                     </div>
-                </div>
+                </div> */}
                 <div className="grid grid-cols-2 gap-5">
-                    <div>
+                    {/* <div>
                         <span>Id No</span>
                         <Form.Item name="id" rules={[{ required: true, message: 'Please enter contact number' }]}>
                             <Input placeholder="Enter contact number" className="rounded-md h-10" />
                         </Form.Item>
-                    </div>
+                    </div> */}
 
-                    <div>
+                    {/* <div>
                         <span>Adress</span>
                         <Form.Item name="address" rules={[{ required: true, message: 'Please enter address' }]}>
                             <Input placeholder="Enter address" className="rounded-md h-10" />
                         </Form.Item>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="flex justify-center items-center">

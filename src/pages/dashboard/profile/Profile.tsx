@@ -2,33 +2,32 @@ import { CiSettings } from 'react-icons/ci';
 import { LiaEditSolid } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
 import { useGetProfileQuery } from '../../../redux/profile/profile';
-
-// const profileData = [
-//     { label: 'First Name :', value: 'Admin Humphrey' },
-//     { label: 'First Name :', value: 'Last Name' },
-//     { label: 'Position :', value: 'Admin' },
-//     { label: 'Id. no. :', value: 'MM4178MRV2' },
-//     { label: 'Email :', value: 'Asadujjaman101@bd.com' },
-//     // { label: 'Contact Number :', value: '073 155 4568' },
-//     // { label: 'Date of Birth :', value: '12 Nov, 2024' },
-//     // { label: 'Gender :', value: 'Male' },
-//     // { label: 'Address :', value: '284 Daffodil Dr, Mount Frere, Eastern Cape - 5088 South Africa' },
-// ];
+import { imgUrl } from '../../../redux/api/baseApi';
 
 const Profile = () => {
-    const { data } = useGetProfileQuery(undefined);
-    console.log(data?.data);
+    const { data, isLoading, isError } = useGetProfileQuery(undefined);
+    console.log(data?.data?.profile);
     const item = data?.data;
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error loading profile.</div>;
+    }
 
     return (
         <div className=" bg-white rounded-lg shadow-md flex space-x-14 p-5">
             <div className="">
                 <img
                     className="h-[252px] w-[251px]  object-cover rounded-xl"
-                    src="https://i.ibb.co.com/2YWbmYtm/df96ee07b3ad8cfad69be782cb4a27ca.jpg"
+                    src={item?.profile?.startsWith('http') ? item?.profile : `${imgUrl}${item?.profile}`}
+                    // src={item?.profile}
                     alt="Profile"
                 />
                 <div className="text-center mt-3">
+                    <div className="text- text-[#5C5C5C]">{item?.firstName}</div>
                     <p className="text-[#006EEE]">Admin</p>
                 </div>
             </div>
