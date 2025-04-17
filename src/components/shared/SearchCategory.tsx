@@ -98,7 +98,6 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
                     <div>
                         <DatePicker
                             className="w-28 h-10"
-                            defaultValue={dayjs('2019-09-03', dateFormat)}
                             minDate={dayjs('2019-08-01', dateFormat)}
                             maxDate={dayjs('2020-10-31', dateFormat)}
                         />

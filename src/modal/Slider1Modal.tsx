@@ -86,20 +86,24 @@ export default function Slider1Modal({ edit, isOpen, onClose, refetch }: PakageM
                             style={{ display: 'none' }}
                             id="file-upload"
                         />
-                        <label htmlFor="file-upload" className="cursor-pointer">
-                            <FiPlusCircle className="text-orange-500 w-6 h-6" />
-                        </label>
                     </div>
-                    <div className="border border-gray-400 p-1 rounded-lg">
-                        {selectFile ? (
-                            <img
-                                src={selectFile instanceof File ? URL.createObjectURL(selectFile) : selectFile}
-                                alt="file image"
-                            />
-                        ) : (
-                            <p className=" flex justify-center items-center h-20">Upload Image</p>
-                        )}
-                    </div>
+
+                    {selectFile ? (
+                        <img
+                            src={selectFile instanceof File ? URL.createObjectURL(selectFile) : selectFile}
+                            alt="file image"
+                        />
+                    ) : (
+                        <p className="border border-gray-400 rounded-md p-3 flex justify-center items-center h-20 text-center">
+                            <label
+                                htmlFor="file-upload"
+                                className="cursor-pointer flex flex-col justify-center items-center"
+                            >
+                                <FiPlusCircle className="text-orange-500 w-6 h-6" />
+                                <span>Upload Image</span>
+                            </label>
+                        </p>
+                    )}
                 </div>
 
                 <Form.Item>

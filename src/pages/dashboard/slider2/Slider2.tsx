@@ -15,6 +15,7 @@ interface DataType {
     name: string;
     car: string;
     image: string;
+    vehicle: string;
 }
 
 export default function Slider2() {
@@ -37,7 +38,7 @@ export default function Slider2() {
     const handleDelete = (record: DataType) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: 'You want to be delete this item!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -69,10 +70,13 @@ export default function Slider2() {
             render: (text: string) => <a>{text}</a>,
         },
         {
-            title: 'Car Name',
-            dataIndex: 'car',
-            key: 'car',
-            // render: (text: string) => <a>{text}</a>,
+            title: 'Vehicle',
+            dataIndex: 'vechicle ',
+            key: 'vechicle',
+            render: (text, record) => {
+                console.log(record);
+                return <span>{record?.car || record?.vehicle}</span>;
+            },
         },
         {
             title: 'Slider Image',

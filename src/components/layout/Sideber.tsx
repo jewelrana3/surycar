@@ -1,10 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CiFileOn, CiSettings, CiUser } from 'react-icons/ci';
 import logo from '../../../public/logo.svg';
 import { GrAnalytics, GrUserAdmin } from 'react-icons/gr';
 import { LuFileSliders } from 'react-icons/lu';
 import { BsList, BsListNested } from 'react-icons/bs';
-import { FcWorkflow } from 'react-icons/fc';
 import { PiNoteDuotone } from 'react-icons/pi';
 import { TbNotes } from 'react-icons/tb';
 import { LiaUserFriendsSolid } from 'react-icons/lia';
@@ -29,7 +28,7 @@ const settings = [
         children: [
             { label: 'Slider 1', path: '/slider1', icon: <BsListNested size={22} /> },
             { label: 'Promotion', path: '/promotion', icon: <BsList size={22} /> },
-            { label: 'Work Functionality', path: '/work-functionality', icon: <FcWorkflow size={22} /> },
+            // { label: 'Work Functionality', path: '/work-functionality', icon: <FcWorkflow size={22} /> },
             { label: 'About Us', path: '/about-us', icon: <LuFileSliders size={22} /> },
             { label: 'Privacy & Policy', path: '/privacy-policy', icon: <PiNoteDuotone size={22} /> },
             { label: 'Terms & Condition', path: '/terms-condition', icon: <TbNotes size={22} /> },
@@ -39,8 +38,10 @@ const settings = [
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const [activeMenu, setActiveMenu] = useState('/');
+    const [activeMenu, setActiveMenu] = useState('');
     const [isSettingOpen, setIsSettingOpen] = useState(false);
+    const pathname = useLocation();
+    const currentPath = pathname.pathname;
 
     const handleLogout = () => {
         navigate('/login');
@@ -57,7 +58,11 @@ const Sidebar = () => {
                         <div
                             onClick={() => setActiveMenu(item.path)}
                             key={item.path}
-                            className={activeMenu === item.path ? 'bg-[#188a50] rounded-r-full text-white w-[90%]' : ''}
+                            className={
+                                activeMenu === item.path || currentPath === item.path
+                                    ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
+                                    : ''
+                            }
                         >
                             <Link className={`flex items-center gap-4  p-6 py-2`} to={item.path}>
                                 <span>{item.icon}</span>
@@ -90,7 +95,7 @@ const Sidebar = () => {
                                     key={`${setting.path}-${child.path}`}
                                     onClick={() => setActiveMenu(child.path)}
                                     className={
-                                        activeMenu === child.path
+                                        activeMenu === child.path || currentPath === child.path
                                             ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
                                             : ''
                                     }
@@ -107,7 +112,11 @@ const Sidebar = () => {
 
                 <div
                     onClick={() => setActiveMenu('/manage-admin')}
-                    className={activeMenu === '/manage-admin' ? 'bg-[#188a50] rounded-r-full text-white w-[90%]' : ''}
+                    className={
+                        activeMenu === '/manage-admin' || currentPath === '/manage-admin'
+                            ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
+                            : ''
+                    }
                 >
                     <Link to={'/manage-admin'} className={`flex items-center gap-4  p-6 py-2`}>
                         <span>

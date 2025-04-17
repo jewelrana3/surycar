@@ -1,30 +1,36 @@
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../components/shared/Button';
+import { useCreatePrivacyMutation, useGetPrivacyQuery } from '../../redux/rule/Privacy';
 
 export default function PrivacyPolicy() {
-    const editor = useRef(null);
-    const navigate = useNavigate();
+    const { data, isError, isLoading } = useGetPrivacyQuery(undefined);
+    const [createPrivacy] = useCreatePrivacyMutation();
 
+    const editor = useRef(null);
     const [content, setContent] = useState('');
 
-    const handleOnSave = (value: string) => {
+    useEffect(() => {
+        if (data?.data?.content) {
+            setContent(data?.data?.content);
+        }
+    }, [data]);
+
+    const handleOnSave = async (value: string) => {
         console.log(value);
+        await createPrivacy({ content: value });
     };
+
+    if (isLoading) {
+        return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    }
+
+    if (isError) {
+        return <div className="flex justify-center items-center h-screen">data not found...</div>;
+    }
+
     return (
         <div className="bg-white">
-            <div
-                className="flex items-center gap-4 font-semibold text-[20px] text-textGray my-5"
-                onClick={() => navigate(-1)}
-            >
-                <button className="text-xl">
-                    <MdOutlineArrowBackIosNew />
-                </button>
-                <button>Privacy & Policy</button>
-            </div>
-
             <div className="">
                 <div className="">
                     <JoditEditor

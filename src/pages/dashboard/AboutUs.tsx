@@ -1,16 +1,37 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 
 import Button from '../../components/shared/Button';
+import { useCreateAboutMutation, useGetAboutQuery } from '../../redux/rule/about';
 
 export default function AboutUS() {
+    const { data, isError, isLoading } = useGetAboutQuery(undefined);
+    const [createAbout] = useCreateAboutMutation();
     const editor = useRef(null);
 
     const [content, setContent] = useState('');
 
-    const handleOnSave = (value: string) => {
+    const handleOnSave = async (value: string) => {
         console.log(value);
+        await createAbout({ content: value }).then((res) => {
+            console.log(res);
+        });
     };
+
+    useEffect(() => {
+        if (data?.data?.content) {
+            setContent(data?.data?.content);
+        }
+    }, [data]);
+
+    if (isLoading) {
+        return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    }
+
+    if (isError) {
+        return <div className="flex justify-center items-center h-screen">data not found...</div>;
+    }
+
     return (
         <div className="bg-white">
             <div className="">
