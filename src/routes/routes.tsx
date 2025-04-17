@@ -26,11 +26,16 @@ import WorkFunction from '../pages/dashboard/WorkFunction';
 import AboutUS from '../pages/dashboard/AboutUs';
 import ManageAdmin from '../pages/dashboard/admin/ManageAdmin';
 import Slider2 from '../pages/dashboard/slider2/Slider2';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
+        element: (
+            <PrivateRoute>
+                <App />
+            </PrivateRoute>
+        ),
         errorElement: <ErrorPage />,
         children: [
             { path: '', element: <Dashboard /> },

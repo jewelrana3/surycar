@@ -1,20 +1,36 @@
 import { ConfigProvider, Form, Input } from 'antd';
 import Button from '../../../components/shared/Button';
+import { useChangePasswordMutation } from '../../../redux/profile/profile';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { IoMdClose } from 'react-icons/io';
 
 export default function ChangePassword() {
-    //   const navigate = useNavigate();
-    //   const [changePassword] = useChangePasswordMutation();
+    const navigate = useNavigate();
+    const [changePassword] = useChangePasswordMutation();
 
     const [form] = Form.useForm();
 
-    const onFinish = (values: string) => {
-        console.log(values);
+    const onFinish = async (values: string) => {
+        try {
+            await changePassword(values);
+            toast.success('Password changed successfully!');
+            navigate('/profile');
+        } catch (error) {
+            toast.error('Failed to change password!');
+        }
+
         form.resetFields();
     };
 
     return (
-        <>
-            <div className="mx-auto bg-transparent px-5 flex items-center justify-center  bg-white rounded-lg py-6">
+        <div className="bg-white rounded-lg py-6">
+            <div className="flex justify-end mr-10">
+                <button onClick={() => navigate('/profile')}>
+                    <IoMdClose size={29} />
+                </button>
+            </div>
+            <div className="mx-auto bg-transparent px-5 flex items-center justify-center  ">
                 <div className="w-full lg:w-2/5  rounded-xl px-7 pt-16 pb-5 ">
                     <ConfigProvider
                         theme={{
@@ -76,7 +92,7 @@ export default function ChangePassword() {
 
                             <span className=" text-base font-medium text-[#636363]">Confirm new Password</span>
                             <Form.Item
-                                name="reEnterPassword"
+                                name="confirmPassword"
                                 className="text-black"
                                 rules={[
                                     {
@@ -109,6 +125,6 @@ export default function ChangePassword() {
                     </ConfigProvider>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

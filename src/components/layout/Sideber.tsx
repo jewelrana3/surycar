@@ -44,6 +44,7 @@ const Sidebar = () => {
     const currentPath = pathname.pathname;
 
     const handleLogout = () => {
+        localStorage.removeItem('accessToken');
         navigate('/login');
     };
     return (

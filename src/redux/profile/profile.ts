@@ -16,7 +16,15 @@ const Profile = api.injectEndpoints({
                 body: data,
             }),
         }),
+
+        changePassword: builder.mutation({
+            query: (data) => ({
+                url: '/auth/change-password',
+                method: 'PATCH',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = Profile;
+export const { useGetProfileQuery, useUpdateProfileMutation, useChangePasswordMutation } = Profile;

@@ -6,6 +6,7 @@ import { useGetProfileQuery, useUpdateProfileMutation } from '../../../redux/pro
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { imgUrl } from '../../../redux/api/baseApi';
+import { IoMdClose } from 'react-icons/io';
 
 interface ProfileData {
     firstName: string;
@@ -70,6 +71,11 @@ const EditProfile = () => {
 
     return (
         <div className="form-container bg-white px-10 rounded-lg pt-4">
+            <div className="flex justify-end mr-10">
+                <button onClick={() => navigate('/profile')}>
+                    <IoMdClose size={29} />
+                </button>
+            </div>
             <span className="text-[#636363] pb-6">Profile Image</span>
             <div className="border border-[#E0E0E0] w-96 p-4 text-center rounded-lg mt-2">
                 <input

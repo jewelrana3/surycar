@@ -1,4 +1,15 @@
+import { useGetPostListQuery } from '../../../redux/postList/post-list';
+
 export default function SellerDetails() {
+    const { data, isLoading, isError } = useGetPostListQuery(undefined);
+    if (isLoading) {
+        return <span>Loading ...</span>;
+    }
+
+    if (isError) {
+        return <span>Error ...</span>;
+    }
+    console.log(data?.data?.vehicles);
     return (
         <div className="bg-[#F9F9F9] px-6 rounded-lg shadow-lg pt-5 pb-10">
             <h1 className="pt-2 pb-4 font-medium text-xl text-[#3A99D9]">Seller Details</h1>

@@ -1,3 +1,5 @@
+import { useGetPostListQuery } from '../../../redux/postList/post-list';
+
 const images = ['/postlist/1.svg', '/postlist/2.svg', '/postlist/3.svg', '/postlist/4.svg', '/postlist/5.svg'];
 const contactInfo = [
     { label: 'Contact No', value: '+963 932 509 736' },
@@ -14,6 +16,15 @@ const total = { label: 'Total', value: 'SYP 130,000' };
 const status = { label: 'Status', value: 'Holding' };
 
 export default function PostImageSection() {
+    const { data, isLoading, isError } = useGetPostListQuery(undefined);
+    if (isLoading) {
+        return <span>Loading ...</span>;
+    }
+    if (isError) {
+        return <span>Error ...</span>;
+    }
+    console.log(data?.data?.vehicles);
+    const vehicle = data?.data?.vehicles;
     return (
         <>
             <div>
@@ -28,24 +39,15 @@ export default function PostImageSection() {
             <div className="space-y-2">
                 {/* Contact Information */}
                 <div className="space-y-4">
-                    {contactInfo.map((item, index) => (
-                        <div key={index} className="grid grid-cols-2">
-                            <p className="text-gray-500">{item.label}</p>
-                            <p className="text-[#188A50]">{item.value}</p>
-                        </div>
-                    ))}
-                </div>
-
-                <hr />
-
-                {/* Price Information */}
-                <div className="space-y-4 pt-5">
-                    {priceInfo.map((item, index) => (
-                        <div key={index} className="grid grid-cols-2">
-                            <p className="text-gray-500">{item.label}</p>
-                            <p className="text-gray-800">{item.value}</p>
-                        </div>
-                    ))}
+                    {contactInfo.map((item: any) => {
+                        console.log(item);
+                        return (
+                            <div key={item?._id} className="grid grid-cols-2">
+                                <p className="text-gray-500">{item.label}</p>
+                                <p className="text-[#188A50]">{item.value}</p>
+                            </div>
+                        );
+                    })}
                 </div>
 
                 <hr />
