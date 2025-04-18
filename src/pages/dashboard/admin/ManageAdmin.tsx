@@ -3,111 +3,24 @@ import { useState } from 'react';
 import { GoLock, GoUnlock } from 'react-icons/go';
 import type { TableColumnsType } from 'antd';
 import { FaRegTrashCan } from 'react-icons/fa6';
-import { LiaEditSolid } from 'react-icons/lia';
 import Swal from 'sweetalert2';
 import AdminModal from '../../../modal/AdminModal';
 import Searchber from './Searchber';
+import { useDeleteAdminMutation, useGetAdminQuery } from '../../../redux/admin/admin';
+import { toast } from 'react-toastify';
 
 interface DataType {
-    key: React.Key;
-    no: string;
-    name: string;
+    _id: string;
+    firstName: string;
+    lastName: string;
     email: string;
     adminType: string;
 }
 
-const data = [
-    {
-        key: '1',
-        no: '24721',
-        name: 'Admin Asadujjaman',
-        address: '3891 Ranchview Dr. Richardson',
-        email: 'kenzi.lawson@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '2',
-        no: '26552',
-        name: 'Admin Asadujjaman',
-        address: '4517 Washington Ave. Manchester',
-        email: 'sara.cruz@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '3',
-        no: '24563',
-        name: 'Admin Asadujjaman',
-        address: '3517 W. Gray St. Utica',
-        email: 'nathan.roberts@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '4',
-        no: '2424',
-        name: 'Dr. Anna KOWALSKA',
-        address: '2118 Thornridge Cir. Syracuse',
-        email: 'alma.lawson@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '5',
-        no: '247865',
-        name: "Dr. Michael O'CONNOR",
-        address: '2972 Westheimer Rd. Santa Ana',
-        email: 'tim.jennings@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '6',
-        no: '24456',
-        name: 'Dr. Yasmin AL-FARSI',
-        address: '2464 Royal Ln. Mesa',
-        email: 'willie.jennings@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '7',
-        no: '24727',
-        name: 'Dr. Leila BEN AMAR',
-        address: '8502 Preston Rd. Inglewood',
-        email: 'bill.sanders@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '8',
-        no: '24578',
-        name: 'Dr. Elena PETROVA',
-        address: '6391 Elgin St. Celina',
-        email: 'debra.holt@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '9',
-        no: '2499',
-        name: 'Dr. Sergei IVANOV',
-        address: '2118 Thornridge Cir. Syracuse',
-        email: 'curtis.weaver@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '10',
-        no: '242310',
-        name: 'Dr. Sofia OLIVEIRA',
-        address: '4140 Parker Rd. Allentown',
-        email: 'michelle.rivera@example.com',
-        adminType: 'Admin',
-    },
-    {
-        key: '11',
-        no: '249811',
-        name: 'Dr. Ahmed KHAN',
-        address: '3517 W. Gray St. Utica',
-        email: 'felicia.reid@example.com',
-        adminType: 'Admin',
-    },
-];
-
 export default function ManageAdmin() {
+    const { data, isError, isLoading, refetch } = useGetAdminQuery(undefined);
+    const adminData = data?.data ? [...data.data].reverse() : [];
+    const [deleteAdmin] = useDeleteAdminMutation();
     const [lock, setLock] = useState<{ [key: string]: boolean }>({});
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [adminModal, setAdminModal] = useState(false);
@@ -131,7 +44,7 @@ export default function ManageAdmin() {
         onChange: onSelectChange,
     };
 
-    const handleDelete = () => {
+    const handleDelete = (id: string) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -142,6 +55,9 @@ export default function ManageAdmin() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
+                deleteAdmin(id);
+                toast.success('Admin deleted successfully!');
+                refetch();
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Your file has been deleted.',
@@ -151,26 +67,35 @@ export default function ManageAdmin() {
         });
     };
 
+    if (isLoading) {
+        return <span className="">Loading...</span>;
+    }
+    if (isError) {
+        return <span className="">data failed...</span>;
+    }
+
     const columns: TableColumnsType<DataType> = [
         {
             title: 'S.No',
             dataIndex: 'no',
+            render: (_: any, __: any, index: number) => <span>{index + 1}</span>,
         },
         {
             title: 'Admin Name',
             dataIndex: 'name',
             key: 'name',
+            render: (_: any, record) => <span>{`${record?.firstName} ${record?.lastName}`}</span>,
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
         },
 
         {
             title: 'Admin Type',
-            dataIndex: 'adminType',
-            key: 'adminType',
+            dataIndex: 'role',
+            key: 'role',
         },
 
         {
@@ -178,20 +103,20 @@ export default function ManageAdmin() {
             dataIndex: 'action',
             key: 'action',
             render: (_: any, record: DataType) => (
-                <div className="flex justify-center items-center gap-2 -ml-8" key={record.no}>
-                    <button
+                <div className="flex justify-center items-center gap-2 -ml-36" key={record._id}>
+                    {/* <button
                         className="mt-1"
                         onClick={() => {
                             setAdminModal(true), setEdit(record);
                         }}
                     >
                         <LiaEditSolid className="text-[5C5C3D] text-[22px] cursor-pointer" />
-                    </button>
+                    </button> */}
 
-                    <button className="" onClick={() => handleLock(record.no)}>
-                        {lock[record.no] ? <GoLock size={20} /> : <GoUnlock size={20} className="text-red-400" />}
+                    <button className="" onClick={() => handleLock(record._id)}>
+                        {lock[record._id] ? <GoLock size={20} /> : <GoUnlock size={20} className="text-red-400" />}
                     </button>
-                    <button className="" onClick={handleDelete}>
+                    <button className="" onClick={() => handleDelete(record._id)}>
                         <FaRegTrashCan size={18} className="text-red-400" />
                     </button>
                 </div>
@@ -202,11 +127,11 @@ export default function ManageAdmin() {
     return (
         <div className="bg-white rounded-lg">
             <Searchber setAdminModal={setAdminModal} />
-            {/* Table with Checkbox Selection */}
+
             <Table
                 columns={columns}
-                dataSource={data}
-                rowKey={(record, index) => `${record.no} ${index}`}
+                dataSource={adminData}
+                rowKey={(record) => `${record._id}`}
                 rowSelection={rowSelection}
             />
             {/* modal */}
@@ -216,6 +141,7 @@ export default function ManageAdmin() {
                     // @ts-ignore
                     edit={edit}
                     isOpen={adminModal}
+                    refetch={refetch}
                     onClose={() => {
                         setAdminModal(false), setEdit(null);
                     }}

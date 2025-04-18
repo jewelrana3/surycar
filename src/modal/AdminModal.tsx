@@ -1,5 +1,7 @@
 import { Button, Form, Input, Modal, Select } from 'antd';
 import { useEffect } from 'react';
+import { useCreateAdminMutation } from '../redux/admin/admin';
+import { toast } from 'react-toastify';
 
 interface DataType {
     key: string;
@@ -13,9 +15,11 @@ interface PakageModalProps {
     isOpen: boolean;
     onClose: () => void;
     edit?: DataType;
+    refetch: () => void;
 }
 
-export default function AdminModal({ edit, isOpen, onClose }: PakageModalProps) {
+export default function AdminModal({ edit, isOpen, onClose, refetch }: PakageModalProps) {
+    const [createAdmin] = useCreateAdminMutation();
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -35,11 +39,22 @@ export default function AdminModal({ edit, isOpen, onClose }: PakageModalProps) 
         }
     }, [edit]);
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Submitted Payload:', values);
+        try {
+            await createAdmin(values).then((res) => {
+                console.log(res);
+            });
+            toast.success('Admin created successfully!');
+            form.resetFields();
+            refetch();
+            onClose();
+        } catch (error) {
+            console.error('Error creating admin:', error);
+        }
     };
 
-    const onChange = (value: string) => {
+    const onChange = async (value: string) => {
         console.log('Selected value:', value);
     };
 
@@ -49,8 +64,15 @@ export default function AdminModal({ edit, isOpen, onClose }: PakageModalProps) 
                 <h1 className="text-2xl mb-4">{edit ? 'Edit Admin' : 'Add Admin'}</h1>
                 <Form form={form} onFinish={onFinish} layout="vertical" className="text-[#606060] font-medium">
                     <Form.Item
-                        name="name"
-                        label="Admin name"
+                        name="firstName"
+                        label="First Name"
+                        rules={[{ required: true, message: 'Please enter admin name' }]}
+                    >
+                        <Input placeholder="Enter admin name" className="rounded-md h-10" />
+                    </Form.Item>
+                    <Form.Item
+                        name="lastName"
+                        label="Last Name"
                         rules={[{ required: true, message: 'Please enter admin name' }]}
                     >
                         <Input placeholder="Enter admin name" className="rounded-md h-10" />
@@ -69,12 +91,12 @@ export default function AdminModal({ edit, isOpen, onClose }: PakageModalProps) 
                     </Form.Item>
 
                     <Form.Item
-                        name="type"
+                        name="role"
                         label="Admin Type"
                         rules={[{ required: true, message: 'Please enter admin type' }]}
                     >
                         <Select onChange={(value) => onChange(value)} className="w-full h-10">
-                            <Select.Option value="admin">Admin</Select.Option>
+                            <Select.Option value="ADMIN">ADMIN</Select.Option>
                         </Select>
                     </Form.Item>
 

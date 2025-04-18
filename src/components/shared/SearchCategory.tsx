@@ -44,7 +44,6 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
     const currentPath = location.pathname;
 
     const currentPage = path.find((item) => item.path === currentPath);
-    console.log(currentPage);
 
     const generatePDF = () => {
         const doc = new jsPDF();

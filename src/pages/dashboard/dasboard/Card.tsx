@@ -1,32 +1,43 @@
 import total from '../../../../public/dashboard/total.svg';
-const data = [
-    {
-        icon: <img src={total} alt="total" />,
-        title: 'Total User',
-        date: '13 NOV, 2024',
-        count: '80',
-        total: '20550',
-        daliy: '29',
-    },
-    {
-        icon: <img src={total} alt="total" />,
-        title: 'Total Post',
-        date: '13 NOV, 2024',
-        count: '80',
-        total: 'S109558',
-        daliy: '1492tn',
-    },
-    {
-        icon: <img src={total} alt="total" />,
-        title: 'Total Earning',
-        date: '13 NOV, 2024',
-        count: '80',
-        total: 'SYP109558',
-        daliy: '1392tn',
-    },
-];
+import { useGetAnalyticsQuery } from '../../../redux/analytics/analytics';
 
 const Card = () => {
+    const { data: getCard, isError, isLoading } = useGetAnalyticsQuery(undefined);
+
+    if (isLoading) {
+        return <span className="">Loading...</span>;
+    }
+
+    if (isError) {
+        return <span className="">data not found...</span>;
+    }
+
+    const data = [
+        {
+            icon: <img src={total} alt="total" />,
+            title: 'Total User',
+            date: '13 NOV, 2024',
+            count: getCard?.data?.totalUser,
+            total: '20550',
+            daliy: getCard?.data?.todayUser,
+        },
+        {
+            icon: <img src={total} alt="total" />,
+            title: 'Total Post',
+            date: '13 NOV, 2024',
+            count: getCard?.data?.totalPost,
+            total: '109558 tn',
+            daliy: getCard?.data?.todayPost,
+        },
+        {
+            icon: <img src={total} alt="total" />,
+            title: 'Total Earning',
+            date: '13 NOV, 2024',
+            count: getCard?.data?.totalEarning,
+            total: 'SYP109558',
+            daliy: getCard?.data?.todayEarning,
+        },
+    ];
     return (
         <div className="grid grid-cols-3  gap-5 ">
             {data.map((item, index) => (

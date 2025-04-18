@@ -22,9 +22,10 @@ const plans = [
     },
 ];
 
-export default function BoostingPakage() {
+export default function BoostingPakage({ data }: any) {
+    const boost = data[2];
     const [lockedPlanId, setLockedPlanId] = useState<{ [key: number]: boolean }>({});
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(boost?.status);
     const changeToogle = (checked: boolean) => {
         setChecked(checked);
     };
@@ -38,7 +39,7 @@ export default function BoostingPakage() {
     return (
         <div className="mt-10">
             <div className="flex justify-between items-center my-2">
-                <h1 className="text-2xl">Boosting package</h1>
+                <h1 className="text-2xl">{boost?.type} package</h1>
                 <div className="flex justify-center items-center gap-3">
                     <p className="mt-1 text-[#929292]">{checked ? 'Packages available' : 'Packages Unavailable'}</p>
                     <p>
@@ -46,20 +47,20 @@ export default function BoostingPakage() {
                     </p>
                 </div>
             </div>
-            <div className="flex flex-col md:flex-row justify-center gap-4">
-                {plans.map((plan) => (
+            <div className="flex flex-col md:flex-row gap-4">
+                {boost?.plan?.map((plan: any) => (
                     <div
-                        key={plan.id}
+                        key={plan?._id}
                         className="w-full md:w-1/3 bg-white shadow rounded-xl p-6 border border-gray-200"
                     >
                         <div className="flex justify-between items-center mb-2">
                             <div>
                                 <span className="text-sm font-medium ">Price : </span>
-                                <span className="text-green-600">{plan.price}</span>
+                                <span className="text-green-600">$ {plan.price}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button onClick={() => handleLock(plan.id)}>
-                                    {lockedPlanId[plan.id] ? (
+                                    {lockedPlanId[plan._id] ? (
                                         <GoLock size={24} />
                                     ) : (
                                         <GoUnlock size={24} className=" text-gray-400" />
@@ -69,7 +70,8 @@ export default function BoostingPakage() {
                             </div>
                         </div>
                         <p className="text-sm text-gray-600 mb-4">
-                            All vehicle data: Here you can always find all your important data!
+                            {plan?.description ||
+                                ' All vehicle data: Here you can always find all your important data!'}
                         </p>
                         <div className="flex items-center gap-2">
                             <IoMdCheckmarkCircle size={24} className="text-green-500" />

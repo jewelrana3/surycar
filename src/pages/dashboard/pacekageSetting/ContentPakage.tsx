@@ -4,27 +4,9 @@ import { GoLock, GoUnlock } from 'react-icons/go';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdOutlineEdit } from 'react-icons/md';
 
-const plans = [
-    {
-        id: 1,
-
-        price: 'SYP 65,000',
-        days: 30,
-    },
-    {
-        id: 2,
-        price: 'SYP 130,000',
-        days: 60,
-    },
-    {
-        id: 3,
-        price: 'SYP 260,000',
-        days: 120,
-    },
-];
-
-export default function ContentPakage() {
-    const [checked, setChecked] = useState(true);
+export default function ContentPakage({ data }: any) {
+    const content = data[1];
+    const [checked, setChecked] = useState(content?.status);
     const [lockedPlanId, setLockedPlanId] = useState<{ [key: number]: boolean }>({});
     const changeToogle = (checked: boolean) => {
         setChecked(checked);
@@ -39,7 +21,7 @@ export default function ContentPakage() {
     return (
         <div className="mt-10">
             <div className="flex justify-between items-center my-2">
-                <h1 className="text-2xl">Content package</h1>
+                <h1 className="text-2xl">{content?.type} package</h1>
                 <div className="flex justify-center items-center gap-3">
                     <p className="mt-1 text-[#929292]">{checked ? 'Packages available' : 'Packages Unavailable'}</p>
                     <p>
@@ -47,16 +29,16 @@ export default function ContentPakage() {
                     </p>
                 </div>
             </div>
-            <div className="flex flex-col md:flex-row justify-center gap-4">
-                {plans.map((plan) => (
+            <div className="flex flex-col md:flex-row  gap-4">
+                {content?.plan.map((plan: any) => (
                     <div
-                        key={plan.id}
+                        key={plan?._id}
                         className="w-full md:w-1/3 bg-white shadow rounded-xl p-6 border border-gray-200 "
                     >
                         <div className="flex justify-between items-center mb-2">
                             <div>
                                 <span className="text-sm font-medium ">Price : </span>
-                                <span className="text-green-600">{plan.price}</span>
+                                <span className="text-green-600">$ {plan.price}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button onClick={() => handleLock(plan.id)}>
