@@ -10,6 +10,7 @@ interface PakageModalProps {
 }
 
 export default function PakageModal({ isOpen, onClose, edit }: PakageModalProps) {
+    console.log(edit?._id);
     const [updatePackage] = useUpdatePackageMutation();
     const { refetch } = useGetPackageQuery(undefined);
     const [form] = Form.useForm();
