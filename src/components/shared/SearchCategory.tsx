@@ -5,6 +5,7 @@ import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
+import * as XLSX from 'xlsx';
 
 // Extending the jsPDF class to include the autoTable method
 declare module 'jspdf' {
@@ -15,12 +16,12 @@ declare module 'jspdf' {
 
 // Define the data type interface for the table
 interface DataType {
-    no: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     address: string;
     email: string;
     contact: string;
-    date: string;
+    createdAt: string;
 }
 
 const dateFormat = 'YYYY-MM-DD';
@@ -40,6 +41,7 @@ interface SearchCategoryProps {
 }
 
 export default function SearchCategory({ data }: SearchCategoryProps) {
+    console.log(data);
     const location = useLocation();
     const currentPath = location.pathname;
 
@@ -51,17 +53,38 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
         doc.setFontSize(16);
         doc.text('Customer List Report', 20, 20);
 
-        // const headers = ['S.No', 'User Name', 'Address', 'Email', 'Contact No', 'Register Date'];
+        const headers = [['Name', 'Address', 'Email', 'Contact', 'Date']];
 
-        const rows = data?.map((item) => [item.no, item.name, item.address, item.email, item.contact, item.date]);
+        const rows = data?.map((item) => [item.firstName, item.address, item.email, item.contact, item.createdAt]);
+
         autoTable(doc, {
-            head: [],
+            head: headers,
             body: rows,
             startY: 30,
         });
 
         // Save the generated PDF
         doc.save('customer_report.pdf');
+    };
+
+    const generateExcel = () => {
+        // Ensure the data is available and correctly formatted
+        const sheetData = data?.map((item) => ({
+            Name: item.firstName,
+            Address: item.address,
+            Email: item.email,
+            Contact: item.contact,
+            Date: item.createdAt?.slice(0, 10),
+        }));
+
+        // Create a new workbook
+        const wb = XLSX.utils.book_new();
+
+        const ws = XLSX.utils.json_to_sheet(sheetData || []);
+
+        XLSX.utils.book_append_sheet(wb, ws, 'Customer Data');
+
+        XLSX.writeFile(wb, 'Customer_Report.xlsx');
     };
 
     return (
@@ -71,7 +94,7 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
                     <button className="" onClick={generatePDF}>
                         <img src="/customer/pdf.svg" alt="pdf" />
                     </button>
-                    <button className="">
+                    <button className="" onClick={generateExcel}>
                         <img src="/customer/xcel.svg" alt="xcel" />
                     </button>
                     <button className="">

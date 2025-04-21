@@ -5,6 +5,7 @@ import SellerDetails from './SellerDetails';
 export default function PostDetails() {
     const { id } = useParams();
     const location = useLocation();
+    console.log(location);
     const state = location.state;
 
     console.log(state, 'state');

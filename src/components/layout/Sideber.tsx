@@ -10,6 +10,7 @@ import { LiaUserFriendsSolid } from 'react-icons/lia';
 import { MdKeyboardArrowUp, MdLogout, MdOutlineKeyboardArrowDown, MdTransform } from 'react-icons/md';
 import { RiListSettingsLine } from 'react-icons/ri';
 import { useState } from 'react';
+import { FcWorkflow } from 'react-icons/fc';
 
 const menuItems = [
     { label: 'Analytics', path: '/', icon: <GrAnalytics size={22} /> }, // Using React Icon here
@@ -28,7 +29,7 @@ const settings = [
         children: [
             { label: 'Banner', path: '/banner', icon: <BsListNested size={22} /> },
             { label: 'Promotion', path: '/promotion', icon: <BsList size={22} /> },
-            // { label: 'Work Functionality', path: '/work-functionality', icon: <FcWorkflow size={22} /> },
+            { label: 'Work Functionality', path: '/work-functionality', icon: <FcWorkflow size={22} /> },
             { label: 'About Us', path: '/about-us', icon: <LuFileSliders size={22} /> },
             { label: 'Privacy & Policy', path: '/privacy-policy', icon: <PiNoteDuotone size={22} /> },
             { label: 'Terms & Condition', path: '/terms-condition', icon: <TbNotes size={22} /> },

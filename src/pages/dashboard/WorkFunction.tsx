@@ -1,17 +1,32 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 
 import Button from '../../components/shared/Button';
+import { useCreateWorkMutation, useGetWorkQuery } from '../../redux/rule/work';
 
 export default function WorkFunction() {
+    const { data, isLoading, isError } = useGetWorkQuery(undefined);
+    const [createWork] = useCreateWorkMutation();
     const editor = useRef(null);
-    // const navigate = useNavigate();
-
     const [content, setContent] = useState('');
 
-    const handleOnSave = (value: string) => {
+    useEffect(() => {
+        if (data?.data?.content) {
+            setContent(data?.data?.content);
+        }
+    }, [data]);
+
+    const handleOnSave = async (value: string) => {
         console.log(value);
+        await createWork({ content: value });
     };
+
+    if (isLoading) {
+        return <span>Loading...</span>;
+    }
+    if (isError) {
+        return <span>data not found</span>;
+    }
     return (
         <div className="bg-white">
             <div className="">

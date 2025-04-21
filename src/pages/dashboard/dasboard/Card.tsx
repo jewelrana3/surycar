@@ -1,5 +1,8 @@
+import { TbReportMoney } from 'react-icons/tb';
 import total from '../../../../public/dashboard/total.svg';
 import { useGetAnalyticsQuery } from '../../../redux/analytics/analytics';
+import { FaUserGroup } from 'react-icons/fa6';
+import { RiContractLeftRightLine } from 'react-icons/ri';
 
 const Card = () => {
     const { data: getCard, isError, isLoading } = useGetAnalyticsQuery(undefined);
@@ -14,7 +17,7 @@ const Card = () => {
 
     const data = [
         {
-            icon: <img src={total} alt="total" />,
+            icon: <FaUserGroup size={24} className="text-[#4D8630]" />,
             title: 'Total User',
             date: '13 NOV, 2024',
             count: getCard?.data?.totalUser,
@@ -22,7 +25,7 @@ const Card = () => {
             daliy: getCard?.data?.todayUser,
         },
         {
-            icon: <img src={total} alt="total" />,
+            icon: <RiContractLeftRightLine size={24} className="text-[#4D8630]" />,
             title: 'Total Post',
             date: '13 NOV, 2024',
             count: getCard?.data?.totalPost,
@@ -30,7 +33,7 @@ const Card = () => {
             daliy: getCard?.data?.todayPost,
         },
         {
-            icon: <img src={total} alt="total" />,
+            icon: <TbReportMoney size={24} className="text-[#4D8630]" />,
             title: 'Total Earning',
             date: '13 NOV, 2024',
             count: getCard?.data?.totalEarning,
@@ -54,7 +57,7 @@ const Card = () => {
                         <p className="text-[12px]  font-medium text-gray-400">{item.date}</p>
                     </div>
                     <div className="flex items-center justify-between mt-4">
-                        <p>Total : {item?.total}</p>
+                        <p>Total : {item?.count}</p>
                         <p>
                             Daily : <span className="text-[#006EEE]">{item?.daliy}</span>
                         </p>

@@ -4,24 +4,26 @@ import { useState } from 'react';
 import { LiaEditSolid } from 'react-icons/lia';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FiPlus } from 'react-icons/fi';
+import Slider1Modal from '../../../modal/Slider1Modal';
 import Swal from 'sweetalert2';
-import { useDeletePromotionMutation, useGetPromotionQuery } from '../../../redux/promotion/promotion';
+import { useDeleteSliderMutation, useGetSliderQuery } from '../../../redux/slider/slider';
 import { imgUrl } from '../../../redux/api/baseApi';
-import PromotionModal from '../../../modal/PromotionModal';
 
 interface DataType {
     _id: string;
     key: string;
     name: string;
-    car: string;
     image: string;
-    vehicle: string;
+    code: string;
 }
 
-export default function Slider2() {
-    const { data: getPromotion, refetch } = useGetPromotionQuery(undefined);
-    const [deletePromotion] = useDeletePromotionMutation();
-    const data = getPromotion?.data;
+export default function Banner() {
+    const { data: sliderResult, isError, isLoading, refetch } = useGetSliderQuery(undefined);
+    const [deleteSlider] = useDeleteSliderMutation();
+
+    const data = sliderResult?.data;
+    console.log(data);
+
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [slider1, setSlider1] = useState(false);
     const [edit, setEdit] = useState<DataType | null>(null);
@@ -35,10 +37,10 @@ export default function Slider2() {
         onChange: onSelectChange,
     };
 
-    const handleDelete = (record: DataType) => {
+    const handleDelete = async (record: DataType) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: 'You want to be delete this item!',
+            text: `You are about to delete ${record.name}. This action cannot be undone!`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -46,11 +48,11 @@ export default function Slider2() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deletePromotion(record._id);
+                deleteSlider(record._id);
                 refetch();
                 Swal.fire({
                     title: 'Deleted!',
-                    text: 'Your file has been deleted.',
+                    text: `${record.name} has been deleted.`,
                     icon: 'success',
                 });
             }
@@ -70,15 +72,6 @@ export default function Slider2() {
             render: (text: string) => <a>{text}</a>,
         },
         {
-            title: 'Vehicle',
-            dataIndex: 'vechicle ',
-            key: 'vechicle',
-            render: (text, record) => {
-                console.log(record);
-                return <span>{record?.car || record?.vehicle}</span>;
-            },
-        },
-        {
             title: 'Slider Image',
             dataIndex: 'image',
             key: 'image',
@@ -86,7 +79,7 @@ export default function Slider2() {
                 <img
                     src={img.startsWith('http') ? img : `${imgUrl}${img}`}
                     alt="slider"
-                    className="object-cover rounded w-40 h-16"
+                    className="w-12 h-12 object-cover rounded"
                 />
             ),
         },
@@ -112,12 +105,20 @@ export default function Slider2() {
         },
     ];
 
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error loading data</div>;
+    }
+
     return (
         <div className="bg-[#F9F9F9] rounded-2xl">
             <div className="flex items-center justify-end p-2">
                 <button
                     onClick={() => setSlider1(true)}
-                    className="flex items-center gap-2 bg-[#188754] hover:bg-[#188754] text-white px-4 py-3 rounded-2xl font-medium shadow-sm"
+                    className="flex items-center gap-2 bg-[#188754] hover:bg-[#188754] text-white px-4 py-2 rounded-2xl font-medium shadow-sm"
                 >
                     <FiPlus className="text-white" />
                     Upload Slider
@@ -128,7 +129,7 @@ export default function Slider2() {
             {/* modal */}
             {slider1 && (
                 //@ts-ignore
-                <PromotionModal
+                <Slider1Modal
                     //@ts-ignore
                     edit={edit}
                     refetch={refetch}

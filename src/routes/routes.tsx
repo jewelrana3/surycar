@@ -21,12 +21,12 @@ import AllDetails from '../pages/dashboard/buyerRegistration/AllDetails';
 import AllDetailsSeller from '../pages/dashboard/sellerTransection/AllDetails';
 import SellerTransection from '../pages/dashboard/sellerTransection/SellerTransection';
 import PackageSetting from '../pages/dashboard/pacekageSetting/PackageSetting';
-import Slider1 from '../pages/dashboard/slider1/Slider1';
 import WorkFunction from '../pages/dashboard/WorkFunction';
 import AboutUS from '../pages/dashboard/AboutUs';
 import ManageAdmin from '../pages/dashboard/admin/ManageAdmin';
-import Slider2 from '../pages/dashboard/slider2/Slider2';
 import PrivateRoute from './PrivateRoute';
+import Banner from '../pages/dashboard/banner/Banner';
+import Promotion from '../pages/dashboard/promotion/Promotion';
 
 const router = createBrowserRouter([
     {
@@ -48,8 +48,8 @@ const router = createBrowserRouter([
             { path: 'seller-transection', element: <SellerTransection /> },
             { path: 'transection-details', element: <AllDetailsSeller /> },
             { path: 'package', element: <PackageSetting /> },
-            { path: 'banner', element: <Slider1 /> },
-            { path: 'promotion', element: <Slider2 /> },
+            { path: 'banner', element: <Banner /> },
+            { path: 'promotion', element: <Promotion /> },
             { path: 'manage-admin', element: <ManageAdmin /> },
 
             { path: 'work-functionality', element: <WorkFunction /> },
