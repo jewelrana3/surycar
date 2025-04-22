@@ -22,6 +22,7 @@ export default function Slider1Modal({ edit, isOpen, onClose, refetch }: PakageM
 
     const [form] = Form.useForm();
     const [selectFile, setSelectFile] = useState<File | string | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     console.log(selectFile);
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function Slider1Modal({ edit, isOpen, onClose, refetch }: PakageM
             form.setFieldsValue({
                 name: edit?.name,
             });
-            setSelectFile(edit?.image?.startsWith('http') ? edit?.image : `${imgUrl}${edit?.image}`);
+            setPreviewUrl(edit?.image?.startsWith('http') ? edit?.image : `${imgUrl}${edit?.image}`);
         }
     }, [edit, form]);
 
@@ -64,6 +65,7 @@ export default function Slider1Modal({ edit, isOpen, onClose, refetch }: PakageM
         const file = e.target.files?.[0];
         if (file) {
             setSelectFile(file);
+            setPreviewUrl(URL.createObjectURL(file));
         }
     };
 
@@ -88,22 +90,21 @@ export default function Slider1Modal({ edit, isOpen, onClose, refetch }: PakageM
                         />
                     </div>
 
-                    {selectFile ? (
-                        <img
-                            src={selectFile instanceof File ? URL.createObjectURL(selectFile) : selectFile}
-                            alt="file image"
-                        />
-                    ) : (
-                        <p className="border border-gray-400 rounded-md p-3 flex justify-center items-center h-20 text-center">
-                            <label
-                                htmlFor="file-upload"
-                                className="cursor-pointer flex flex-col justify-center items-center"
-                            >
-                                <FiPlusCircle className="text-orange-500 w-6 h-6" />
-                                <span>Upload Image</span>
-                            </label>
-                        </p>
-                    )}
+                    <div onClick={() => document.getElementById('file-upload')?.click()}>
+                        {previewUrl ? (
+                            <img src={previewUrl} alt="file image" />
+                        ) : (
+                            <p className="border border-gray-400 rounded-md p-3 flex justify-center items-center h-20 text-center">
+                                <label
+                                    htmlFor="file-upload"
+                                    className="cursor-pointer flex flex-col justify-center items-center"
+                                >
+                                    <FiPlusCircle className="text-orange-500 w-6 h-6" />
+                                    <span>Upload Image</span>
+                                </label>
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <Form.Item>

@@ -4,6 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
 import dayjs from 'dayjs';
+import * as XLSX from 'xlsx';
 
 // Extending the jsPDF class to include the autoTable method
 declare module 'jspdf' {
@@ -51,7 +52,7 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
         doc.setFontSize(16);
         doc.text('Customer List Report', 20, 20);
 
-        const headers = [['brand', 'address', 'price', 'model', 'firstName', 'createdAt', 'status']];
+        const headers = [['Brand', 'Address', 'Price', 'Model', 'FirstName', 'CreatedAt', 'Status']];
 
         const rows = data?.map((item) => [
             item.brand,
@@ -73,6 +74,27 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
         doc.save('postlist_report.pdf');
     };
 
+    const generateExcel = () => {
+        // Ensure the data is available and correctly formatted
+        const sheetData = data?.map((item) => ({
+            Name: item?.user.firstName,
+            Address: item.address,
+            Price: item.price,
+            Category: item.category,
+            Date: item?.user.createdAt?.slice(0, 10),
+            Status: item?.status,
+        }));
+
+        // Create a new workbook
+        const wb = XLSX.utils.book_new();
+
+        const ws = XLSX.utils.json_to_sheet(sheetData || []);
+
+        XLSX.utils.book_append_sheet(wb, ws, 'Customer Data');
+
+        XLSX.writeFile(wb, 'Customer_Report.xlsx');
+    };
+
     return (
         <div className="flex justify-end">
             <div className="flex items-center p-4 rounded-lg space-x-2">
@@ -80,7 +102,7 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
                     <button className="" onClick={generatePDF}>
                         <img src="/customer/pdf.svg" alt="pdf" />
                     </button>
-                    <button className="">
+                    <button className="" onClick={generateExcel}>
                         <img src="/customer/xcel.svg" alt="xcel" />
                     </button>
                     <button className="">

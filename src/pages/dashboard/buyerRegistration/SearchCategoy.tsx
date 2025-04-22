@@ -41,7 +41,7 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
         doc.setFontSize(16);
         doc.text('Customer List Report', 20, 20);
 
-        const headers = [['firstName', 'email', 'contact', 'brand', 'createdAt']];
+        const headers = [['Name', 'Email', 'Contact', 'Brand', 'Date']];
 
         const rows = data?.map((item) => [
             item?.user?.firstName,

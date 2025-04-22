@@ -91,12 +91,7 @@ const EditProfile = () => {
                     onClick={() => document.getElementById('file')?.click()}
                 >
                     {previewUrl ? (
-                        <img
-                            src={previewUrl}
-                            // src={previewUrl}
-                            alt="pic"
-                            className="w-48 h-56"
-                        />
+                        <img src={previewUrl} alt="pic" className="w-48 h-56" />
                     ) : (
                         <div className="">
                             <span className="">

@@ -129,6 +129,7 @@ export default function ManageAdmin() {
             <Searchber setAdminModal={setAdminModal} />
 
             <Table
+                className="py-"
                 columns={columns}
                 dataSource={adminData}
                 rowKey={(record) => `${record._id}`}

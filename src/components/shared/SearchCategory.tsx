@@ -1,10 +1,9 @@
-import { DatePicker, Input, Select } from 'antd';
+import { DatePicker, Input } from 'antd';
 import { GoLock, GoUnlock } from 'react-icons/go';
 import { FaSearch } from 'react-icons/fa';
 import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
 import dayjs from 'dayjs';
-import { useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 
 // Extending the jsPDF class to include the autoTable method
@@ -26,27 +25,11 @@ interface DataType {
 
 const dateFormat = 'YYYY-MM-DD';
 
-const path = [
-    { path: '/', name: 'Analytics' },
-    { path: '/customers', name: 'Customers' },
-    { path: '/post-list', name: 'Post List' },
-    { path: '/customer-details', name: 'Customer Profile' },
-    { path: '/post-details', name: 'Post Details' },
-    { path: '/buyer-registration', name: 'Buyer Registration' },
-    { path: '/seller-transection', name: 'Seller Transection' },
-];
-
 interface SearchCategoryProps {
     data?: DataType[]; // data prop should be an array of DataType
 }
 
 export default function SearchCategory({ data }: SearchCategoryProps) {
-    console.log(data);
-    const location = useLocation();
-    const currentPath = location.pathname;
-
-    const currentPage = path.find((item) => item.path === currentPath);
-
     const generatePDF = () => {
         const doc = new jsPDF();
 
@@ -113,48 +96,13 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
                     />
                 </div>
 
-                {currentPage &&
-                (currentPage.path === '/buyer-registration' ||
-                    currentPage.path === '/customers' ||
-                    currentPage.path === '/seller-transection') ? (
-                    <div>
-                        <DatePicker
-                            className="w-28 h-10"
-                            minDate={dayjs('2019-08-01', dateFormat)}
-                            maxDate={dayjs('2020-10-31', dateFormat)}
-                        />
-                    </div>
-                ) : (
-                    <>
-                        <div>
-                            <Select
-                                defaultValue="Category"
-                                className="rounded-full shadow-black w-28 h-10"
-                                style={{ fontFamily: 'Poppins' }}
-                            >
-                                <Select.Option value="car">Car</Select.Option>
-                                <Select.Option value="bike">Bike</Select.Option>
-                            </Select>
-                        </div>
-                        <div>
-                            <Select
-                                defaultValue="Status"
-                                className="rounded-full shadow-black w-28 h-10"
-                                style={{ fontFamily: 'Poppins' }}
-                            >
-                                <Select.Option value="car">Posted</Select.Option>
-                                <Select.Option value="bike">Holding</Select.Option>
-                            </Select>
-                        </div>
-                        <div>
-                            <DatePicker
-                                className="w-32 h-10"
-                                minDate={dayjs('2019-08-01', dateFormat)}
-                                maxDate={dayjs('2020-10-31', dateFormat)}
-                            />
-                        </div>
-                    </>
-                )}
+                <div>
+                    <DatePicker
+                        className="w-28 h-10"
+                        minDate={dayjs('2019-08-01', dateFormat)}
+                        maxDate={dayjs('2020-10-31', dateFormat)}
+                    />
+                </div>
             </div>
         </div>
     );
