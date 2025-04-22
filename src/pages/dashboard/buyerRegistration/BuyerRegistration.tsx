@@ -32,14 +32,24 @@ export default function BuyerRegistration() {
     console.log(workData);
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
+    // const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    //     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    //     setSelectedRowKeys(newSelectedRowKeys);
+    // };
+
+    // const rowSelection = {
+    //     onchange: onSelectChange,
+    //     selectedRowKeys,
+    // };
+
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        console.log('Selected row keys: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
     const rowSelection = {
-        onchange: onSelectChange,
         selectedRowKeys,
+        onChange: onSelectChange,
     };
 
     if (isLoading) {

@@ -62,13 +62,14 @@ const Sidebar = () => {
                             key={item.path}
                             className={
                                 activeMenu === item.path || currentPath === item.path
-                                    ? 'bg-[#188a50] rounded-r-full text-white w-[90%]'
+                                    ? 'select rounded-r-full text-white w-[90%]'
                                     : ''
                             }
                         >
                             <Link className={`flex items-center gap-4  p-6 py-2`} to={item.path}>
                                 <span>{item.icon}</span>
                                 {item.label}
+                                {item.label === 'Post List' && <div className="notification-bubble -mt-4 -ml-1">1</div>}
                             </Link>
                         </div>
                     );

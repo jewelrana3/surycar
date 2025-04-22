@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import { useState } from 'react';
 import { CiCircleInfo } from 'react-icons/ci';
 import { GoLock, GoUnlock } from 'react-icons/go';
@@ -28,6 +28,8 @@ export default function PostList() {
     const { data: getPostList, isLoading, isError } = useGetPostListQuery(undefined);
     const getData = getPostList?.data?.vehicles;
 
+    console.log(getData);
+
     const [lock, setLock] = useState<{ [key: string]: boolean }>({});
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -39,13 +41,13 @@ export default function PostList() {
     };
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        console.log('Selected row keys: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
     const rowSelection = {
-        onchange: onSelectChange,
         selectedRowKeys,
+        onChange: onSelectChange,
     };
 
     if (isLoading) {
@@ -59,7 +61,7 @@ export default function PostList() {
         {
             title: 'S.No',
 
-            render: (_: any, __: any, index) => index + 1,
+            render: (_: any, __: DataType, index: number) => index + 1,
         },
         {
             title: 'Car Name',
@@ -126,15 +128,27 @@ export default function PostList() {
         },
     ];
 
+    const getRowClassName = (record: DataType) => {
+        if (selectedRowKeys.includes(record._id)) {
+            return 'selected-row'; // Apply custom class to selected rows
+        }
+        if (record.status === 'Published') {
+            return 'published-row'; // class for Published status
+        }
+        return '';
+    };
+
     return (
-        <div className="bg-white rounded-lg">
+        <div className=" rounded-lg">
             <SearchCategory data={getData} />
             {/* Table with Checkbox Selection */}
+
             <Table
                 columns={columns}
                 dataSource={getData}
-                rowKey={(record) => `${record?._id} `}
+                rowKey={(record) => `${record?._id}`}
                 rowSelection={rowSelection}
+                rowClassName={getRowClassName}
             />
         </div>
     );

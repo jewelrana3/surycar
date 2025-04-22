@@ -17,16 +17,33 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.ant-menu-item-selected {
+.select {
+    background: #188a50;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.notification-bubble {
+    top: 5px;
+    right: -5px;
+    width: 17px;
+    height: 17px;
+    background-color: #eec10b; /* Red bubble */
+    color: #5c5c5c;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .ant-menu-item-selected {
     background: #188a50 !important;
     color: white !important;
     gap: '3px';
-}
-
-.active {
-    background: #188a50;
-    color: white;
-}
+    animation-duration: 3s;
+} */
 
 /* .jodit-wysiwyg ul {
     list-style-type: disc;
@@ -35,4 +52,22 @@ body {
 .jodit-wysiwyg ol {
     list-style-type: decimal;
     padding-left: 40px;
+} */
+
+.selected-row {
+    background-color: #f0f8ff; /* Light blue background for selected rows */
+}
+
+.published-row {
+    background-color: #e8f3ee;
+    /* color: white; */
+}
+
+.ant-table-cell-row-hover {
+    background: #e8f3ee !important;
+}
+
+/* .published-row:hover {
+    background-color: '#F9F9F9' !important;
+    color: black;
 } */
