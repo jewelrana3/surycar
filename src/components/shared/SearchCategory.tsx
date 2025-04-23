@@ -15,6 +15,7 @@ declare module 'jspdf' {
 
 // Define the data type interface for the table
 interface DataType {
+    _id: string;
     firstName: string;
     lastName: string;
     address: string;
@@ -26,10 +27,12 @@ interface DataType {
 const dateFormat = 'YYYY-MM-DD';
 
 interface SearchCategoryProps {
-    data?: DataType[]; // data prop should be an array of DataType
+    data?: DataType[];
+    setLock?: React.Dispatch<React.SetStateAction<{ [key: string]: boolean }>>;
+    selectedRowKeys?: string[];
 }
 
-export default function SearchCategory({ data }: SearchCategoryProps) {
+export default function SearchCategory({ data, setLock, selectedRowKeys }: SearchCategoryProps) {
     const generatePDF = () => {
         const doc = new jsPDF();
 
@@ -70,6 +73,26 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
         XLSX.writeFile(wb, 'Customer_Report.xlsx');
     };
 
+    const handleUnlock = () => {
+        if (selectedRowKeys) {
+            const lockState = selectedRowKeys.reduce(
+                (acc, key) => ({
+                    ...acc,
+                    [key]: false,
+                }),
+                {},
+            );
+            setLock?.(lockState);
+        }
+    };
+
+    const handleLock = () => {
+        if (selectedRowKeys) {
+            const lockState = Object.fromEntries(selectedRowKeys.map((key) => [key, true]));
+            setLock?.(lockState);
+        }
+    };
+
     return (
         <div className="flex justify-end">
             <div className="flex items-center p-4 rounded-lg space-x-2">
@@ -80,10 +103,10 @@ export default function SearchCategory({ data }: SearchCategoryProps) {
                     <button className="" onClick={generateExcel}>
                         <img src="/customer/xcel.svg" alt="xcel" />
                     </button>
-                    <button className="">
+                    <button className="" onClick={handleUnlock}>
                         <GoUnlock size={28} className="text-textGray" />
                     </button>
-                    <button className="">
+                    <button className="" onClick={handleLock}>
                         <GoLock size={28} className="text-textGray" />
                     </button>
                 </div>

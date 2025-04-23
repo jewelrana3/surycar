@@ -1,26 +1,8 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { curveCardinal } from 'd3-shape';
 import { Select } from 'antd';
 import { useState } from 'react';
 import { useGetUserQuery } from '../../../redux/analytics/analytics';
 const { Option } = Select;
-
-// const data = [
-//     { name: 'Jan', uv: 4000 },
-//     { name: 'Feb', uv: 3000 },
-//     { name: 'Mar', uv: 2000 },
-//     { name: 'Apr', uv: 2780 },
-//     { name: 'May', uv: 1890 },
-//     { name: 'Jun', uv: 2390 },
-//     { name: 'Jul', uv: 3490 },
-//     { name: 'Aug', uv: 4000 },
-//     { name: 'Sep', uv: 3100 },
-//     { name: 'Oct', uv: 4200 },
-//     { name: 'Nov', uv: 3800 },
-//     { name: 'Dec', uv: 3500 },
-// ];
-
-const cardinal = curveCardinal.tension(0.2);
 
 export default function User() {
     const { data, isError, isLoading } = useGetUserQuery(undefined);

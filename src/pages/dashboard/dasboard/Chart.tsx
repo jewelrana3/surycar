@@ -5,21 +5,6 @@ import { useGetEarningQuery } from '../../../redux/analytics/analytics';
 
 const { Option } = Select;
 
-// const data = [
-//     { name: 'Jan', pv: 2400, amt: 2400 },
-//     { name: 'Feb', pv: 1398, amt: 2210 },
-//     { name: 'Mar', pv: 9800, amt: 2290 },
-//     { name: 'Apr', pv: 3908, amt: 2000 },
-//     { name: 'May', pv: 4800, amt: 2181 },
-//     { name: 'Jun', pv: 3800, amt: 2500 },
-//     { name: 'Jul', pv: 4300, amt: 2100 },
-//     { name: 'Aug', pv: 4300, amt: 2100 },
-//     { name: 'Sep', pv: 4300, amt: 2100 },
-//     { name: 'Oct', pv: 4300, amt: 2100 },
-//     { name: 'Nov', pv: 4300, amt: 2100 },
-//     { name: 'Dec', pv: 4300, amt: 2100 },
-// ];
-
 export default function Chart() {
     const { data, isError, isLoading } = useGetEarningQuery(undefined);
     console.log(data?.data);

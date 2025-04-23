@@ -81,14 +81,14 @@ export default function BuyerRegistration() {
             dataIndex: 'contact',
             key: 'contact',
         },
-        {
-            title: 'Post S. No',
-            dataIndex: 'no',
-            key: 'no',
-            render: (no: string) => {
-                return <span>#{no}</span>;
-            },
-        },
+        // {
+        //     title: 'Post S. No',
+        //     dataIndex: 'no',
+        //     key: 'no',
+        //     render: (no: string) => {
+        //         return <span>#{no}</span>;
+        //     },
+        // },
         {
             title: 'Car Name',
             dataIndex: 'brand',

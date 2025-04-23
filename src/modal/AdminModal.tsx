@@ -19,7 +19,7 @@ interface PakageModalProps {
 }
 
 export default function AdminModal({ edit, isOpen, onClose, refetch }: PakageModalProps) {
-    const [createAdmin] = useCreateAdminMutation();
+    const [createAdmin, { isSuccess }] = useCreateAdminMutation();
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -41,16 +41,21 @@ export default function AdminModal({ edit, isOpen, onClose, refetch }: PakageMod
 
     const onFinish = async (values: any) => {
         console.log('Submitted Payload:', values);
+
         try {
-            await createAdmin(values).then((res) => {
-                console.log(res);
-            });
-            toast.success('Admin created successfully!');
+            const res = await createAdmin(values);
+            if (res.data.success) {
+                console.log(isSuccess);
+                toast.success(isSuccess);
+            } else {
+                // @ts-ignore
+                toast.error(res?.isError?.message);
+            }
             form.resetFields();
             refetch();
             onClose();
         } catch (error) {
-            console.error('Error creating admin:', error);
+            toast.error('An unexpected error occurred');
         }
     };
 
