@@ -3,47 +3,41 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/shared/Button';
 import { useLoginMutation } from '../../redux/apiSlice/authSlice';
 import { useEffect } from 'react';
-import Swal from 'sweetalert2';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
-    const [login, { isError, isSuccess, data, error }] = useLoginMutation();
+    const [login, { isSuccess, data, isError, error }] = useLoginMutation();
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (isSuccess && data) {
-            Swal.fire({
-                text: data.message,
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false,
-            }).then(() => {
+        if (isSuccess) {
+            if (data) {
+                toast.success(data?.message);
+            }
+
+            setTimeout(() => {
                 if (data) {
-                    localStorage.setItem('accessToken', data?.data?.accessToken);
-                    sessionStorage.setItem('accessToken', data?.data?.accessToken);
+                    localStorage.setItem('accressToken', data?.data?.accessToken);
+                    localStorage.setItem('refreshToken', data?.data?.refreshToken);
                     navigate('/');
                 }
-            });
-        } else if (isError) {
-            Swal.fire({
-                title: 'Login failed',
-                //@ts-ignore
-                text: error?.data?.message,
-                icon: 'error',
-                confirmButtonText: 'OK',
-            });
+            }, 1500);
         }
-    }, [isError, isSuccess, data, error, navigate]);
+
+        if (isError) {
+            //@ts-ignore
+            toast.error(error?.data?.message || 'Failed to Login');
+        }
+    }, [isSuccess, isError, data, navigate, error]);
 
     const onFinish = async (values: { email: string; password: string }) => {
-        console.log(values);
         form.resetFields();
 
         const data = {
             email: values?.email,
             password: values?.password,
         };
-
         await login(data).unwrap();
     };
 
@@ -155,6 +149,7 @@ const Login = () => {
                     </Form>
                 </div>
             </div>
+            <ToastContainer />
         </ConfigProvider>
     );
 };
