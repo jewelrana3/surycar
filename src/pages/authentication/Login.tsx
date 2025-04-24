@@ -117,13 +117,29 @@ const Login = () => {
                             <Input.Password placeholder="Enter your password" className=" h-12  px-6 bg-white" />
                         </Form.Item>
 
-                        <div className="flex items-center justify-between mb-4">
-                            <Form.Item name="remember" valuePropName="checked" noStyle>
-                                <Checkbox className=" text-lg">Remember me</Checkbox>
-                            </Form.Item>
-                            <Link to="/forget-password" className="text-primary text-md hover:text-primary">
-                                Forget password
-                            </Link>
+                        <div className="flex items-center justify-between space-x-4">
+                            <div>
+                                <ConfigProvider
+                                    theme={{
+                                        components: {
+                                            Checkbox: {
+                                                colorBgContainer: 'rgb(19,194,194)',
+                                                colorPrimary: '',
+                                                colorPrimaryHover: 'rgb(19,194,194)',
+                                            },
+                                        },
+                                    }}
+                                >
+                                    <Form.Item name="remember" valuePropName="checked">
+                                        <Checkbox className="text-lg">Remember me</Checkbox>
+                                    </Form.Item>
+                                </ConfigProvider>
+                            </div>
+                            <div className="-mt-3">
+                                <Link to="/forget-password" className="text-primary text-md hover:text-primary">
+                                    Forget password
+                                </Link>
+                            </div>
                         </div>
 
                         <Form.Item>
