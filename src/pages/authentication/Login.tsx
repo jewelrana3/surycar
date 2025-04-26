@@ -2,34 +2,32 @@ import { Checkbox, ConfigProvider, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/shared/Button';
 import { useLoginMutation } from '../../redux/apiSlice/authSlice';
+import toast from 'react-hot-toast';
 import { useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
-    const [login, { isSuccess, data, isError, error }] = useLoginMutation();
+    const [login, { isSuccess, isLoading, data, isError }] = useLoginMutation();
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (isSuccess) {
-            if (data) {
-                toast.success(data?.message);
+        if (isLoading) {
+            toast.loading('Loading...', { id: 'login-toast' });
+        } else {
+            toast.dismiss('login-toast');
+
+            if (isSuccess && data) {
+                toast.success('Login successful', { id: 'login-toast' });
+
+                // Save tokens in localStorage
+                localStorage.setItem('accessToken', data?.data?.accessToken);
+                localStorage.setItem('refreshToken', data?.data?.refreshToken);
+                navigate('/');
+            } else if (isError) {
+                toast.error(data?.message || 'Login failed', { id: 'login-toast' });
             }
-
-            setTimeout(() => {
-                if (data) {
-                    localStorage.setItem('accressToken', data?.data?.accessToken);
-                    localStorage.setItem('refreshToken', data?.data?.refreshToken);
-                    navigate('/');
-                }
-            }, 1500);
         }
-
-        if (isError) {
-            //@ts-ignore
-            toast.error(error?.data?.message || 'Failed to Login');
-        }
-    }, [isSuccess, isError, data, navigate, error]);
+    }, [isLoading, isSuccess, isError, data, navigate]);
 
     const onFinish = async (values: { email: string; password: string }) => {
         form.resetFields();
@@ -149,7 +147,6 @@ const Login = () => {
                     </Form>
                 </div>
             </div>
-            <ToastContainer />
         </ConfigProvider>
     );
 };

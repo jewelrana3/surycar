@@ -7,7 +7,7 @@ const { Option } = Select;
 
 export default function Chart() {
     const { data, isError, isLoading } = useGetEarningQuery(undefined);
-    console.log(data?.data);
+
     const userData = data?.data.map((item: any) => ({
         name: item.month,
         total: item.total,
