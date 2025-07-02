@@ -23,7 +23,7 @@ export default function Slider1Modal({ edit, isOpen, onClose, refetch }: PakageM
     const [form] = Form.useForm();
     const [selectFile, setSelectFile] = useState<File | string | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    console.log(selectFile);
+    console.log(selectFile, 'file');
 
     useEffect(() => {
         if (edit?._id) {
